@@ -9,7 +9,7 @@ import GaugeChart from 'react-gauge-chart'
 const { Text } = Typography;
 
 export const Device_Description = {
-    "RR": {
+    "RRI": {
         "id": 1,
         "watch_threshold_min": 600,
         "watch_threshold_max": 1200,
