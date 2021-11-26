@@ -69,8 +69,8 @@ class SeniorUser extends React.Component {
               <Col > 
                 <Device_Tile 
                   device_type={this.props.data.device_type} 
-                  // current_data={this.props.data.data[ this.props.data.data.length - 1].value}
-                  current_data={this.props.data.data.value}
+                  current_data={this.props.data.data[ this.props.data.data.length - 1].value}
+                  //current_data={this.props.data.data.value}
                   size={this.props.element_size}
                   watch={this.props.data.watch}
                   textVisible={this.props.textVisible}
