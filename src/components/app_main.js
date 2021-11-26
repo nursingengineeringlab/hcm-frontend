@@ -15,8 +15,11 @@ var https_public_url = "http://127.0.0.1"
 var api_base_url = https_public_url + ":8000/";
 const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
 
+let username = 'test';
+let password = 'test';
 let headers = new Headers();
 headers.append('Accept', 'application/json');
+headers.set('Authorization', 'Basic ' + btoa(username + ":" + password));
 
 
 const max_array_len = 10;
@@ -51,18 +54,27 @@ class MainApp extends React.Component {
     wsclient.onmessage = (message) => {
       this.call_back(message);
     };
-
-    fetch(api_base_url + 'get-online-seniors/', {
+    
+    fetch(api_base_url + 'seniors/', {
         method: 'GET',
-        headers: headers
+        headers: headers 
     })
     .then((response) => response.json())
     .then((data) => {
-      for (var key in data){
-        data[key]["watch"] = exceeded_threshold(data[key].data[data[key].data.length - 1].value, data[key].device_type);  // determine whether to add to watch list
-        data[key]["color"] = randomColor({luminosity: 'dark',});
-        this.OnlineSeniors.set(key, data[key]);
-      }
+      for (var element of data['results']) {
+        console.log(element);
+        element["data"] = {"value": 0, "time": 0}
+        element["battery"] = 60
+        element["watch"] = exceeded_threshold(0, element['device_type']);  // determine whether to add to watch list
+        element["color"] = randomColor({luminosity: 'dark',});
+        this.OnlineSeniors.set(element['device_id'], element);
+      }      
+      // for (var d in data['results']){
+      //   console.log(d);
+      //   data[key]["watch"] = exceeded_threshold(data[key].data[data[key].data.length - 1].value, data[key].device_type);  // determine whether to add to watch list
+      //   data[key]["color"] = randomColor({luminosity: 'dark',});
+      //   this.OnlineSeniors.set(key, data[key]);
+      // }
       this.setState({flag: !this.state.flag});  // Triggers a re-rendering
     }).catch(err => {
       console.log(err)
