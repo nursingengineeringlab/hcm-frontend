@@ -63,12 +63,12 @@ class MainApp extends React.Component {
     .then((data) => {
       for (var element of data['results']) {
         console.log(element);
-        element["data"] = {"value": 0, "time": 0}
-        element["battery"] = 60
-        element["watch"] = exceeded_threshold(0, element['device_type']);  // determine whether to add to watch list
+        element["data"] = [{"value": 60, "time": 0}];
+        element["battery"] = 60;
+        element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
         element["color"] = randomColor({luminosity: 'dark',});
         this.OnlineSeniors.set(element['device_id'], element);
-      }      
+      }
       // for (var d in data['results']){
       //   console.log(d);
       //   data[key]["watch"] = exceeded_threshold(data[key].data[data[key].data.length - 1].value, data[key].device_type);  // determine whether to add to watch list
