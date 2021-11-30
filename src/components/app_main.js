@@ -11,9 +11,11 @@ import {exceeded_threshold} from './device_type.js'
 const { Header, Content, Footer, Sider } = Layout;
 var randomColor = require('randomcolor'); // import the script
 
-var https_public_url = "http://127.0.0.1"
+// var https_public_url = "http://127.0.0.1"
+var https_public_url = "http://shiywang.asuscomm.com/"
 var api_base_url = https_public_url + ":8000/";
-const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
+// const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
+const wsclient = new WebSocket('ws://shiywang.asuscomm.com/ws/sensor/RR');
 
 let username = 'test';
 let password = 'test';
@@ -62,7 +64,7 @@ class MainApp extends React.Component {
     .then((response) => response.json())
     .then((data) => {
       for (var element of data['results']) {
-        console.log(element);
+        // console.log(element);
         element["data"] = [{"value": 60, "time": 0}];
         element["battery"] = 60;
         element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
