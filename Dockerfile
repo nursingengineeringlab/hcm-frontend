@@ -1,4 +1,5 @@
 FROM node:latest
 WORKDIR /code
-COPY . /code
+ENV PATH /code/node_modules/.bin:$PATH
+COPY . /code/
 RUN npm install
