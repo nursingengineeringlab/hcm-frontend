@@ -12,12 +12,16 @@ const { Header, Content, Footer, Sider } = Layout;
 var randomColor = require('randomcolor'); // import the script
 
 // var https_public_url = "http://127.0.0.1"
-var https_public_url = "http://shiywang.asuscomm.com/"
-var api_base_url = https_public_url + ":8000/";
+// var api_base_url = https_public_url + ":8000/";
 // const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
-const wsclient = new WebSocket('ws://shiywang.asuscomm.com/ws/sensor/RR');
 
-let username = 'test';
+
+var https_public_url = "http://shiywang.asuscomm.com"
+var api_base_url = https_public_url + ":30007/";
+const wsclient = new WebSocket('ws://shiywang.asuscomm.com:30007/ws/sensor/RR');
+
+
+let username = 'test1';
 let password = 'test';
 let headers = new Headers();
 headers.append('Accept', 'application/json');
