@@ -94,7 +94,8 @@ class MainApp extends React.Component {
     if(this.OnlineSeniors.has(jmsg.device_id)) {
       let new_data = {"value": jmsg.value, "time": jmsg.time};
       const time_now = Date.now();
-      console.log(jmsg, time_now - jmsg.time);
+      console.log(jmsg.device_id, jmsg.sequence_id, jmsg.value, time_now - jmsg.time);
+
       this.OnlineSeniors.get(jmsg.device_id).data.push(new_data)
       this.OnlineSeniors.get(jmsg.device_id).watch = exceeded_threshold(
           new_data.value,
