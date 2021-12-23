@@ -51,11 +51,11 @@ export const exceeded_threshold = (val, device_type) =>{
     return false;
 }
 
-export class Device_Tile extends React.Component {
+export class DeviceTile extends React.Component {
 
-    constructor(props){
-        super(props);
-    }
+    // constructor(props){
+    //     super(props);
+    // }
 
   render() {
     const watch_style  = {fontWeight: "bold", fontSize: 20, color: this.props.textVisible ? bckColor : tColor,};
@@ -81,7 +81,7 @@ export class Device_Tile extends React.Component {
 }
 
 
-export class Device_Modal extends React.Component {
+export class DeviceModal extends React.Component {
 
     render() { 
       return (
