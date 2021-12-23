@@ -21,8 +21,8 @@ var randomColor = require('randomcolor'); // import the script
 // const wsclient = new WebSocket('ws://shiywang.asuscomm.com:30007/ws/sensor/RR');
 
 var https_public_url = "http://127.0.0.1"
-var api_base_url = https_public_url + ":30007/";
-const wsclient = new WebSocket('ws://127.0.0.1:30007/ws/sensor/RR');
+var api_base_url = https_public_url + ":8000/";
+const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
 
 
 
@@ -143,8 +143,8 @@ class MainApp extends React.Component {
           <Content style={{ margin: '0 16px' }}>
             <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
               <UserList
-                online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch == false)}
-                watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch == true)}
+                online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false)}
+                watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true)}
               />
             </div>
           </Content>

@@ -3,7 +3,7 @@ import { Avatar,  Typography, Row, Col, Divider, Modal} from 'antd';
 import "antd/dist/antd.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMars, faVenus,} from '@fortawesome/free-solid-svg-icons'
-import {Device_Tile, Device_Modal} from './device_type.js'
+import {DeviceTile, DeviceModal} from './device_type.js'
 
 const { Text } = Typography;
 // var randomColor = require('randomcolor'); // import the script
@@ -58,8 +58,9 @@ class SeniorUser extends React.Component {
             <Row justify='space-around'>
               <Col  >
                 <Row justify='space-around'>
-                  <Text code style={{textAlign: 'center'}}> 
-                    {this.props.data.battery + '%' + '🔋'}  
+                  <Text code style={{textAlign: 'center'}}>
+                    {// eslint-disable-next-line
+                    this.props.data.battery + '%' + '🔋' }    
                   </Text>
                 </Row>
               </Col>
@@ -67,7 +68,7 @@ class SeniorUser extends React.Component {
                   <Divider type="vertical" style={{ margin: 0, height: '100%'}}/>
               </Col>
               <Col > 
-                <Device_Tile 
+                <DeviceTile 
                   device_type={this.props.data.device_type} 
                   current_data={this.props.data.data[ this.props.data.data.length - 1].value}
                   //current_data={this.props.data.data.value}
@@ -136,7 +137,7 @@ class SeniorUser extends React.Component {
           width={'60%'}
           title="More ..."
         >
-          <Device_Modal {...this.props}/>
+          <DeviceModal {...this.props}/>
       </Modal>
 
       </>
