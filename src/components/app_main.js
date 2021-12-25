@@ -94,24 +94,40 @@ class MainApp extends React.Component {
   }
 
   call_back = e =>  {
-    const object = JSON.parse(e.data);
-    var jmsg = JSON.parse(object.message);
-    if(this.OnlineSeniors.has(jmsg.device_id)) {
-      let new_data = {"value": jmsg.value, "time": jmsg.time};
-      const time_now = Date.now();
-      console.log(jmsg.device_id, jmsg.sequence_id, jmsg.value, time_now - jmsg.time);
-
-      this.OnlineSeniors.get(jmsg.device_id).data.push(new_data)
-      this.OnlineSeniors.get(jmsg.device_id).watch = exceeded_threshold(
-          new_data.value,
-          this.OnlineSeniors.get(jmsg.device_id).device_type
-      );
-      // Maintain array size
-      if(this.OnlineSeniors.get(jmsg.device_id).data.length > max_array_len){
-        this.OnlineSeniors.get(jmsg.device_id).data.shift();
-      }
+    // console.log(e.data)
+    // var packet = e.data["message"];
+    const packet = JSON.parse(e.data).message;
+    if(packet.command === "new") {
+        console.log("New device connected.", packet.device_id);
+        // determine whether to add to watch list
+        // packet["watch"] = exceeded_threshold(packet[packet.data.length - 1].value, packet.device_type);  
+        // packet["color"] = randomColor({luminosity: 'dark',});
+        this.OnlineSeniors.set(packet.device_id, packet);
+    } else if (packet.command === "update") {
+        if(this.OnlineSeniors.has(packet.device_id)) {
+          let new_data = {"value": packet.value, "time": packet.time};
+          const time_now = Date.now();
+          console.log(packet.device_id, packet.sequence_id, packet.value, time_now - packet.time);
+    
+          this.OnlineSeniors.get(packet.device_id).data.push(new_data)
+          this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
+              new_data.value,
+              this.OnlineSeniors.get(packet.device_id).device_type
+          );
+          // Maintain array size
+          if(this.OnlineSeniors.get(packet.device_id).data.length > max_array_len){
+            this.OnlineSeniors.get(packet.device_id).data.shift();
+          }
+        } else {
+          console.log("Device not found", packet.device_id);
+        }
+    } else if (packet.command === "close") {
+        console.log("Device offline", packet.device_id);
+        this.OnlineSeniors.delete(packet.device_id);
     }
-    this.setState({flag: !this.state.flag});  // Triggers a re-rendering
+    
+    // Triggers a re-rendering
+    this.setState({flag: !this.state.flag});  
   };
 
   onCollapse = collapsed => {
