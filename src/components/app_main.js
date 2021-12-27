@@ -8,6 +8,9 @@ import {
 } from '@ant-design/icons';
 import UserList from './user_list.js'
 import {exceeded_threshold} from './device_type.js'
+import Dashboard from '../Dashboard/Dashboard';
+import Preferences from '../Preferences/Preferences';
+
 const { Header, Content, Footer, Sider } = Layout;
 var randomColor = require('randomcolor'); // import the script
 
