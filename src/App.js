@@ -1,10 +1,35 @@
 // import logo from './umass.svg';
 import './App.css';
 import MainApp from './components/app_main'
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
+
+import Dashboard from './components/Dashboard/Dashboard';
+import Preferences from './components/Preferences/Preferences';
+import Login from './components/Login/Login';
 
 function App() {
+  const [token, setToken] = useState();
+  
+  if(!token) {
+    return <Login setToken={setToken} />
+  }
+
   return (
-    <MainApp />
+    <div className="wrapper">
+    <h1>Application</h1>
+    <BrowserRouter>
+      <Switch>
+        <Route path="/dashboard">
+          <MainApp />
+        </Route>
+        <Route path="/preferences">
+          <Preferences />
+        </Route>
+      </Switch>
+    </BrowserRouter>
+  </div>
+
+    // <MainApp />
     // <div className="App">
     //   <header className="App-header">
     //     <img src={logo} className="App-logo" alt="logo" />
