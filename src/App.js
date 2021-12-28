@@ -7,8 +7,8 @@ import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 import Signup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
-import Dashboard from "./components/Dashboard/Dashboard";
-import MainApp from './components/app_main'
+import Dashboard from "../public/Dashboard";
+import MainApp from './components/Dashboard/Dashboard'
 import requireAuth from "./utils/RequireAuth";
 
 
