@@ -145,6 +145,7 @@ class Dashboard extends Component {
   };
 
   render() {
+    const { user } = this.props.auth;
     const { collapsed } = this.state;
     return (
       <div>
