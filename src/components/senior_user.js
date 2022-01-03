@@ -3,7 +3,7 @@ import { Avatar,  Typography, Row, Col, Divider, Modal} from 'antd';
 import "antd/dist/antd.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faMars, faVenus,} from '@fortawesome/free-solid-svg-icons'
-import {DeviceTile, DeviceModal} from './DeviceType.js'
+import {DeviceTile, DeviceModal} from './device_type.js'
 
 const { Text } = Typography;
 // var randomColor = require('randomcolor'); // import the script

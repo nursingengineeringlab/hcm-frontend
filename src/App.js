@@ -1,36 +1,27 @@
 // import logo from './umass.svg';
 import './App.css';
-import React, { Component } from "react";
-import Root from "./Root";
-import { Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
-import Home from "./components/Home";
-import Signup from "./components/Signup/Signup";
-import Login from "./components/Login/Login";
-// import Dashboard from "../public/Dashboard";
-import Dashboard from './components/Dashboard/Dashboard'
-import requireAuth from "./utils/RequireAuth";
+import MainApp from './components/app_main'
 
-
-import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8000";
-
-class App extends Component {
-  render() {
-    return (
-      <div>
-        <Root>
-          <ToastContainer hideProgressBar={true} newestOnTop={true} />
-          <Switch>
-            <Route path="/signup" component={Signup} />
-            <Route path="/login" component={Login} />
-            <Route path="/dashboard" component={requireAuth(Dashboard)} />
-            <Route exact path="/" component={Home} />
-          </Switch>
-        </Root>
-      </div>
-    );
-  }
+function App() {
+  return (
+    <MainApp />
+    // <div className="App">
+    //   <header className="App-header">
+    //     <img src={logo} className="App-logo" alt="logo" />
+    //     <p>
+    //       Edit <code>src/App.js</code> and save to reload.
+    //     </p>
+    //     <a
+    //       className="App-link"
+    //       href="https://reactjs.org"
+    //       target="_blank"
+    //       rel="noopener noreferrer"
+    //     >
+    //       Learn React
+    //     </a>
+    //   </header>
+    // </div>
+  );
 }
 
 export default App;
