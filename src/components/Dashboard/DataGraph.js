@@ -1,6 +1,6 @@
 import React from 'react';
-import { ResponsiveLine } from '@nivo/line'
-import {Device_Description} from './device_type.js'
+import {ResponsiveLine } from '@nivo/line'
+import {Device_Description} from './DeviceType.js'
 
 const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
     <g>
