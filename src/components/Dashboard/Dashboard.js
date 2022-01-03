@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { Layout, Menu} from 'antd';
 import "antd/dist/antd.css";
+import "./Dashboard.css"
 import {
   SearchOutlined,
   TeamOutlined,
@@ -13,7 +14,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
-const { Header, Content, Footer, Sider } = Layout;
+const { Content, Footer, Sider } = Layout;
 
 
 var randomColor = require('randomcolor'); // import the script
@@ -149,48 +150,48 @@ class Dashboard extends Component {
     const { collapsed } = this.state;
     return (
       <div>
-      <Navbar bg="light">
-        <Navbar.Brand href="/">Home</Navbar.Brand>
-        <Navbar.Toggle />
-        <Navbar.Collapse className="justify-content-end">
-          <Navbar.Text>
-            User: <b>{user.username}</b>
-          </Navbar.Text>
-          <Nav.Link onClick={this.onLogout}>Logout</Nav.Link>
-        </Navbar.Collapse>
-      </Navbar>
+        <div class="dash-bgclolor">
+        <Navbar className="dash-bgclolor">
+          <Navbar.Brand className="text-light">Healthcare Monitor System</Navbar.Brand>
+          <Navbar.Toggle />
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text className="text-light">
+              User: <b>{user.username}</b>
+            </Navbar.Text>
+            <Nav.Link onClick={this.onLogout} className="text-light">Logout</Nav.Link>
+          </Navbar.Collapse>
+        </Navbar>
+        </div>
 
+        <Layout style={{ minHeight: '100vh' }}>
+          <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
+            <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
+              <div style={{height: 5}}> </div>
+              <Menu.Item key="1" icon={<TeamOutlined />}>
+                Online Users
+              </Menu.Item>
+              <Menu.Item key="2" icon={<SearchOutlined />}>
+                Search 
+              </Menu.Item>
+              <Menu.Item key="3" icon={<UserOutlined />}>
+                Add New User 
+              </Menu.Item>
+            </Menu>
+          </Sider>
 
-      <Layout style={{ minHeight: '100vh' }}>
-        <Sider collapsible collapsed={collapsed} onCollapse={this.onCollapse}>
-          <div style={{height: 60}}> </div>
-          <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
-            <Menu.Item key="1" icon={<TeamOutlined />}>
-              Online Users
-            </Menu.Item>
-            <Menu.Item key="2" icon={<SearchOutlined />}>
-              Search 
-            </Menu.Item>
-            <Menu.Item key="3" icon={<UserOutlined />}>
-              Add New User 
-            </Menu.Item>
-          </Menu>
-        </Sider>
-
-        <Layout className="site-layout">
-          <Header className="site-layout-background" style={{ padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-              <UserList
-                online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false)}
-                watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true)}
-              />
-            </div>
-          </Content>
-          <Footer style={{ textAlign: 'center' }}>NE Lab ©2021 Umass Amherst</Footer>
+          <Layout className="site-layout">
+            <Content style={{ margin: '0 16px' }}>
+              <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
+                <UserList
+                  online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false)}
+                  watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true)}
+                />
+              </div>
+            </Content>
+            <Footer style={{ textAlign: 'center' }}>NE Lab ©2022 Umass Amherst</Footer>
+          </Layout>
         </Layout>
-      </Layout>
-      
+        
       </div>
     );
   }
