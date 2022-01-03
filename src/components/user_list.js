@@ -1,7 +1,7 @@
 import React from 'react';
 import { List} from 'antd';
 import "antd/dist/antd.css";
-import SeniorUser from './SeniorUser.js';
+import SeniorUser from './senior_user.js';
 import {Typography, Row, Col} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye} from '@fortawesome/free-solid-svg-icons'
