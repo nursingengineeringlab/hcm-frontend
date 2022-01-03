@@ -1,22 +1,25 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Container } from "react-bootstrap";
+import "./Home.css"
 
 class Home extends Component {
   render() {
     return (
-      <Container>
-        <h1>Home</h1>
-        <p>
+      <div class="jumbotron d-flex align-items-center min-vh-100">
+      <Container className="text-center">
+        <h1>Umass NE Lab HMS</h1>
+        <h3>
           <Link to="/login/">Login</Link>
-        </p>
-        <p>
+        </h3>
+        <h3>
           <Link to="/signup">Sign up</Link>
-        </p>
-        <p>
+        </h3>
+        <h3>
           <Link to="/dashboard">Dashboard</Link>
-        </p>
+        </h3>
       </Container>
+      </div>
     );
   }
 }
