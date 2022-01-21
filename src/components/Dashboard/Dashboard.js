@@ -51,7 +51,6 @@ class Dashboard extends Component {
       object: ""
     };
     this.OnlineSeniors =  new Map();
-    //this.OnlineSeniors.set(temp_user.device_id, temp_user);
   }
 
   onLogout = () => {
@@ -83,19 +82,12 @@ class Dashboard extends Component {
     .then((response) => response.json())
     .then((data) => {
       for (var element of data['results']) {
-        // console.log(element);
         element["data"] = [{"value": 60, "time": 0}];
         element["battery"] = 60;
         element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
         element["color"] = randomColor({luminosity: 'dark',});
         this.OnlineSeniors.set(element['device_id'], element);
       }
-      // for (var d in data['results']){
-      //   console.log(d);
-      //   data[key]["watch"] = exceeded_threshold(data[key].data[data[key].data.length - 1].value, data[key].device_type);  // determine whether to add to watch list
-      //   data[key]["color"] = randomColor({luminosity: 'dark',});
-      //   this.OnlineSeniors.set(key, data[key]);
-      // }
       this.setState({flag: !this.state.flag});  // Triggers a re-rendering
     }).catch(err => {
       console.log(err)
@@ -109,15 +101,12 @@ class Dashboard extends Component {
     const packet = JSON.parse(e.data).message;
     if(packet.command === "new") {
         console.log("New device connected.", packet.device_id);
-        // determine whether to add to watch list
-        // packet["watch"] = exceeded_threshold(packet[packet.data.length - 1].value, packet.device_type);  
-        // packet["color"] = randomColor({luminosity: 'dark',});
         this.OnlineSeniors.set(packet.device_id, packet);
     } else if (packet.command === "update") {
         if(this.OnlineSeniors.has(packet.device_id)) {
-          let new_data = {"value": packet.value, "time": packet.time};
           const time_now = Date.now();
-          console.log(packet.device_id, packet.sequence_id, packet.value, time_now - packet.time);
+          let new_data = {"value": packet.value, "time": packet.time};
+          console.log(packet.device_id, packet.sequence_id, packet.value, time_now, packet.time, time_now - packet.time);
     
           this.OnlineSeniors.get(packet.device_id).data.push(new_data)
           this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
