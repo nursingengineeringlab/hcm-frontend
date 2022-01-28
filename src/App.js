@@ -14,6 +14,7 @@ import requireAuth from "./utils/RequireAuth";
 
 import axios from "axios";
 axios.defaults.baseURL = "http://localhost:8000";
+// axios.defaults.headers["Authorization"] = token ? `Token ${token} : null`;
 
 class App extends Component {
   render() {

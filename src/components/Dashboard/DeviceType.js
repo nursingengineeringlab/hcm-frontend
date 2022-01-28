@@ -15,8 +15,8 @@ export const Device_Description = {
         "watch_threshold_max": 1200,
         "trigger_min_direction": [700, 650, 550],      
         "trigger_max_direction": [1000, 1100, 1200],
-        "graph_min": 500,
-        "graph_max": 1300,
+        "graph_min": 0,
+        "graph_max": 4000,
     }, 
     "TEMP": {
         "id": 2,
@@ -24,8 +24,8 @@ export const Device_Description = {
         "watch_threshold_max": 99.5,
         "trigger_min_direction": [97, 96.5, 96],      
         "trigger_max_direction": [99.5, 100.0, 100.9],
-        "graph_min": 90,
-        "graph_max": 101,
+        "graph_min": -20,
+        "graph_max": 150,
     }, 
     "SPO2": {
         "id": 3,

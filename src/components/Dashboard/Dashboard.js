@@ -139,7 +139,7 @@ class Dashboard extends Component {
     const { collapsed } = this.state;
     return (
       <div>
-        <div class="dash-bgclolor">
+        <div className="dash-bgclolor">
         <Navbar className="dash-bgclolor">
           <Navbar.Brand className="text-light">Healthcare Monitor System</Navbar.Brand>
           <Navbar.Toggle />

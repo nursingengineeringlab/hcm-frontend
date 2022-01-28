@@ -6,7 +6,7 @@ import "./Home.css"
 class Home extends Component {
   render() {
     return (
-      <div class="jumbotron d-flex align-items-center min-vh-100">
+      <div className="jumbotron d-flex align-items-center min-vh-100">
       <Container className="text-center">
         <h1>Umass NE Lab HMS</h1>
         <h3>
