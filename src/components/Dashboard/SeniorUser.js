@@ -23,7 +23,7 @@ class SeniorUser extends React.Component {
   senior_object = () => {
 
     const bulk_watch_style = {fontSize: 14, fontWeight: "bold", color: this.props.textVisible ? '#ff0800' : '#dcdcdc', padding: 2, borderRadius: 4,};
-    const bulk_normal_style = {fontSize: 14, padding: 2}; 
+    const bulk_normal_style = {fontSize: 14, padding: 2};
 
     return (  
       <>{ 
@@ -67,15 +67,14 @@ class SeniorUser extends React.Component {
               <Col >
                   <Divider type="vertical" style={{ margin: 0, height: '100%'}}/>
               </Col>
-              <Col > 
-                <DeviceTile 
-                  device_type={this.props.data.device_type} 
-                  current_data={this.props.data.data[ this.props.data.data.length - 1].value}
-                  //current_data={this.props.data.data.value}
-                  size={this.props.element_size}
-                  watch={this.props.data.watch}
-                  textVisible={this.props.textVisible}
-                />
+              <Col>        
+                  {this.props.data.active === false ? "inactive" : <DeviceTile 
+                        device_type={this.props.data.device_type}
+                        current_data={this.props.data.data[ this.props.data.data.length - 1].value}
+                        size={this.props.element_size}
+                        watch={this.props.data.watch}
+                        textVisible={this.props.textVisible}
+                  />}
               </Col>
             </Row>
           </Col>

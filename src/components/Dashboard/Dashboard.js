@@ -73,6 +73,7 @@ class Dashboard extends Component {
         element["data"] = [{"value": 60, "time": 0}];
         element["battery"] = 60;
         element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
+        element["active"] = false;
         element["color"] = randomColor({luminosity: 'dark',});
         this.OnlineSeniors.set(element['device_id'], element);
       }
@@ -89,14 +90,17 @@ class Dashboard extends Component {
     const packet = JSON.parse(e.data).message;
     if(packet.command === "new") {
         console.log("New device connected.", packet.device_id);
+        packet.active = true;
         this.OnlineSeniors.set(packet.device_id, packet);
+        // this.OnlineSeniors.get(packet.device_id).active = true;
+
     } else if (packet.command === "update") {
         if(this.OnlineSeniors.has(packet.device_id)) {
-          const time_now = Date.now();
+          // const time_now = Date.now();
           let new_data = {"value": packet.value, "time": packet.time};
-          console.log(packet.device_id, packet.sequence_id, packet.value, time_now, packet.time, time_now - packet.time);
-    
+          // console.log(packet.device_id, packet.sequence_id, packet.value, time_now, packet.time, time_now - packet.time);    
           this.OnlineSeniors.get(packet.device_id).data.push(new_data)
+          this.OnlineSeniors.get(packet.device_id).active = true;
           this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
               new_data.value,
               this.OnlineSeniors.get(packet.device_id).device_type
@@ -109,8 +113,10 @@ class Dashboard extends Component {
           console.log("Device not found", packet.device_id);
         }
     } else if (packet.command === "close") {
+        packet.active = false;
+        this.OnlineSeniors.get(packet.device_id).active = false;
         console.log("Device offline", packet.device_id);
-        this.OnlineSeniors.delete(packet.device_id);
+        //this.OnlineSeniors.delete(packet.device_id);
     }
     
     // Triggers a re-rendering
@@ -160,8 +166,9 @@ class Dashboard extends Component {
             <Content style={{ margin: '0 16px' }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                 <UserList
-                  online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false)}
-                  watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true)}
+                  online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false && data.active === true)}
+                  watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true && data.active === true)}
+                  inactive_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.active === false)}
                 />
               </div>
             </Content>
