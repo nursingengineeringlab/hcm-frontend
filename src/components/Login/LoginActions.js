@@ -2,7 +2,7 @@ import axios from "axios";
 import { push } from "connected-react-router";
 import { toast } from "react-toastify";
 import { SET_TOKEN, SET_CURRENT_USER, UNSET_CURRENT_USER } from "./LoginTypes";
-import { setAxiosAuthToken, toastOnError } from "../../utils/Utils";
+import { setAxiosAuthToken, setDashBoardAuthToken, toastOnError } from "../../utils/Utils";
 
 export const login = (userData, redirectTo) => dispatch => {
   axios
@@ -10,6 +10,7 @@ export const login = (userData, redirectTo) => dispatch => {
     .then(response => {
       const { auth_token } = response.data;
       setAxiosAuthToken(auth_token);
+      setDashBoardAuthToken(auth_token);
       dispatch(setToken(auth_token));
       dispatch(getCurrentUser(redirectTo));
     })
@@ -49,6 +50,7 @@ export const setCurrentUser = (user, redirectTo) => dispatch => {
 
 export const setToken = token => dispatch => {
   setAxiosAuthToken(token);
+  setDashBoardAuthToken(token);
   localStorage.setItem("token", token);
   dispatch({
     type: SET_TOKEN,
@@ -58,6 +60,7 @@ export const setToken = token => dispatch => {
 
 export const unsetCurrentUser = () => dispatch => {
   setAxiosAuthToken("");
+  setDashBoardAuthToken("");
   localStorage.removeItem("token");
   localStorage.removeItem("user");
   dispatch({

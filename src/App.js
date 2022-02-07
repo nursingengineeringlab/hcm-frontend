@@ -10,12 +10,13 @@ import Login from "./components/Login/Login";
 // import Dashboard from "../public/Dashboard";
 import Dashboard from './components/Dashboard/Dashboard'
 import requireAuth from "./utils/RequireAuth";
-
-
 import axios from "axios";
-axios.defaults.baseURL = "http://localhost:8000";
-// axios.defaults.headers["Authorization"] = token ? `Token ${token} : null`;
+import {http_public_url, api_port} from "./config.js"
 
+
+
+axios.defaults.baseURL = http_public_url + ":" + api_port
+// axios.defaults.headers["Authorization"] = token ? `Token ${token} : null`;
 class App extends Component {
   render() {
     return (

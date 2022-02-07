@@ -14,29 +14,17 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
+import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
 const { Content, Footer, Sider } = Layout;
 
 
 var randomColor = require('randomcolor'); // import the script
 
-// var https_public_url = "http://127.0.0.1"
-// var api_base_url = https_public_url + ":8000/";
-// const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
-// var https_public_url = "http://shiywang.asuscomm.com"
-// var api_base_url = https_public_url + ":30007/";
-// const wsclient = new WebSocket('ws://shiywang.asuscomm.com:30007/ws/sensor/RR');
 
-var https_public_url = "http://127.0.0.1";
-var api_base_url = https_public_url + ":8000/";
-const wsclient = new WebSocket('ws://127.0.0.1:8000/ws/sensor/RR');
-
-
-
-let username = 'test';
-let password = 'test';
-let headers = new Headers();
-headers.append('Accept', 'application/json');
-headers.set('Authorization', 'Basic ' + btoa(username + ":" + password));
+var api_base_url = http_public_url + ":" + api_port + "/";
+var web_socket_url = "ws://127.0.0.1:" + api_port + "/ws/sensor/RR"
+const wsclient = new WebSocket(web_socket_url);
+dashboardHeaders.append('Accept', 'application/json');
 
 
 const max_array_len = 10;
@@ -77,7 +65,7 @@ class Dashboard extends Component {
     
     fetch(api_base_url + 'seniors/', {
         method: 'GET',
-        headers: headers 
+        headers: dashboardHeaders
     })
     .then((response) => response.json())
     .then((data) => {

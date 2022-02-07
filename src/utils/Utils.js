@@ -1,5 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { dashboardHeaders } from "../config.js";
+
+export const setDashBoardAuthToken = token => {
+  if (typeof token !== "undefined" && token) {
+    dashboardHeaders.set('Authorization', 'Token  ' + token);
+  } else {
+    dashboardHeaders.delete('Authorization');
+  }
+}
 
 export const setAxiosAuthToken = token => {
   if (typeof token !== "undefined" && token) {
