@@ -56,7 +56,7 @@ class SeniorUser extends React.Component {
           {/* Device Data */}
           <Col flex={3}>
             <Row justify='space-around'>
-              <Col  >
+              <Col>
                 <Row justify='space-around'>
                   <Text code style={{textAlign: 'center'}}>
                     {// eslint-disable-next-line
@@ -64,12 +64,12 @@ class SeniorUser extends React.Component {
                   </Text>
                 </Row>
               </Col>
-              <Col >
+              <Col>
                   <Divider type="vertical" style={{ margin: 0, height: '100%'}}/>
               </Col>
-              <Col>        
-                  {this.props.data.active === false ? "inactive" : <DeviceTile 
-                        device_type={this.props.data.device_type}
+              <Col>
+                  {this.props.data.active === false ? "" : <DeviceTile
+                        device_type={this.props.data.data_type}
                         current_data={this.props.data.data[ this.props.data.data.length - 1].value}
                         size={this.props.element_size}
                         watch={this.props.data.watch}

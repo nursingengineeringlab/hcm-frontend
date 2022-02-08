@@ -13,7 +13,7 @@ export const Device_Description = {
         "id": 1,
         "watch_threshold_min": 600,
         "watch_threshold_max": 1200,
-        "trigger_min_direction": [700, 650, 550],      
+        "trigger_min_direction": [700, 650, 550],
         "trigger_max_direction": [1000, 1100, 1200],
         "graph_min": 0,
         "graph_max": 4000,

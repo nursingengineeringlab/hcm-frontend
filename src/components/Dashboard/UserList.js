@@ -46,7 +46,7 @@ class UserList extends React.Component {
           <div style={styles.watchlist_div2}>
             <div style={styles.header_div}> 
               <Row  justify='space-around'>
-                <Col> 
+                <Col>
                   <Text style={{fontSize: 16, color: 'red', textAlign: 'center'}}>
                     <FontAwesomeIcon style={{marginRight: 5, color: 'red'}} icon={faEye} size="xs"/>Watch List
                   </Text> 

@@ -93,13 +93,13 @@ class Dashboard extends Component {
         packet.active = true;
         this.OnlineSeniors.set(packet.device_id, packet);
         // this.OnlineSeniors.get(packet.device_id).active = true;
-
     } else if (packet.command === "update") {
         if(this.OnlineSeniors.has(packet.device_id)) {
           // const time_now = Date.now();
           let new_data = {"value": packet.value, "time": packet.time};
           // console.log(packet.device_id, packet.sequence_id, packet.value, time_now, packet.time, time_now - packet.time);    
-          this.OnlineSeniors.get(packet.device_id).data.push(new_data)
+          this.OnlineSeniors.get(packet.device_id).data.push(new_data);
+          this.OnlineSeniors.get(packet.device_id).data_type = packet.data_type;
           this.OnlineSeniors.get(packet.device_id).active = true;
           this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
               new_data.value,
@@ -154,11 +154,11 @@ class Dashboard extends Component {
                 Online Users
               </Menu.Item>
               <Menu.Item key="2" icon={<SearchOutlined />}>
-                Search 
+                Search
               </Menu.Item>
-              <Menu.Item key="3" icon={<UserOutlined />}>
-                Add New User 
-              </Menu.Item>
+              {/* <Menu.Item key="3" icon={<UserOutlined />}>
+                Add New User
+              </Menu.Item> */}
             </Menu>
           </Sider>
 
