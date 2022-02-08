@@ -2,7 +2,7 @@ import React from 'react';
 import { Avatar,  Typography, Row, Col, Divider, Modal} from 'antd';
 import "antd/dist/antd.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faMars, faVenus,} from '@fortawesome/free-solid-svg-icons'
+import { faMars, faToggleOff, faVenus,} from '@fortawesome/free-solid-svg-icons'
 import {DeviceTile, DeviceModal} from './DeviceType.js'
 
 const { Text } = Typography;
@@ -60,7 +60,7 @@ class SeniorUser extends React.Component {
                 <Row justify='space-around'>
                   <Text code style={{textAlign: 'center'}}>
                     {// eslint-disable-next-line
-                    this.props.data.battery + '%' + '🔋' }    
+                    this.props.data.battery + '%' + '🔋' }
                   </Text>
                 </Row>
               </Col>
@@ -68,7 +68,7 @@ class SeniorUser extends React.Component {
                   <Divider type="vertical" style={{ margin: 0, height: '100%'}}/>
               </Col>
               <Col>
-                  {this.props.data.active === false ? "" : <DeviceTile
+                  {this.props.data.active === false ? <FontAwesomeIcon icon={faToggleOff} size="1x"></FontAwesomeIcon> : <DeviceTile
                         device_type={this.props.data.data_type}
                         current_data={this.props.data.data[ this.props.data.data.length - 1].value}
                         size={this.props.element_size}

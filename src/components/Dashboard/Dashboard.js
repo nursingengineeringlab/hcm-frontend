@@ -103,7 +103,7 @@ class Dashboard extends Component {
           this.OnlineSeniors.get(packet.device_id).active = true;
           this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
               new_data.value,
-              this.OnlineSeniors.get(packet.device_id).device_type
+              this.OnlineSeniors.get(packet.device_id).data_type
           );
           // Maintain array size
           if(this.OnlineSeniors.get(packet.device_id).data.length > max_array_len){
@@ -153,11 +153,8 @@ class Dashboard extends Component {
               <Menu.Item key="1" icon={<TeamOutlined />}>
                 Online Users
               </Menu.Item>
-              <Menu.Item key="2" icon={<SearchOutlined />}>
+              {/* <Menu.Item key="2" icon={<SearchOutlined />}>
                 Search
-              </Menu.Item>
-              {/* <Menu.Item key="3" icon={<UserOutlined />}>
-                Add New User
               </Menu.Item> */}
             </Menu>
           </Sider>

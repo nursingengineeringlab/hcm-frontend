@@ -2,7 +2,7 @@ import React from 'react';
 import {Typography, Row, Col, Divider} from 'antd';
 import "antd/dist/antd.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, } from '@fortawesome/free-solid-svg-icons'
+import { faHeartbeat, faThermometer, faUser, } from '@fortawesome/free-solid-svg-icons'
 import {MyGraph} from './DataGraph.js'
 import GaugeChart from 'react-gauge-chart'
 
@@ -53,26 +53,24 @@ export const exceeded_threshold = (val, device_type) =>{
 
 export class DeviceTile extends React.Component {
 
-    // constructor(props){
-    //     super(props);
-    // }
-
   render() {
     const watch_style  = {fontWeight: "bold", fontSize: 20, color: this.props.textVisible ? bckColor : tColor,};
     const normal_style = {fontSize: 20, color: "#696969"};
-
     return (
         <>
             <Row justify='space-around'>
                 <Col>
-                    <Text code style={{}}>{this.props.device_type}</Text>
+                    <Text code style={{}}>
+                        {this.props.device_type === "RRI" ? <Text><FontAwesomeIcon icon={faHeartbeat} size="1x"/>RRI</Text> : 
+                        <Text><FontAwesomeIcon icon={faThermometer} size="1x"/>TEMP</Text>}
+                    </Text>
                 </Col>
             </Row>
             <Row justify='space-around'>
                 <Col>
                     <Text style={this.props.watch ? watch_style : normal_style}>
                         {this.props.current_data}
-                    </Text>                    
+                    </Text>
                 </Col>
             </Row>
         </>
@@ -92,12 +90,10 @@ export class DeviceModal extends React.Component {
                     <div width="100%">
                         <Text style={{fontSize: 15, textAlign: 'center'}}> <FontAwesomeIcon color={this.props.data.color} icon={faUser} size="1x" style={{marginRight: 10}}/> Personal Info</Text>
                         <Divider style={{ margin: 10, }}/>
-
                         <Row> <Text strong style={{fontSize: 16, textAlign: 'center'}}> {this.props.data.name}  </Text> </Row>
                         <Row style={{marginBottom: 15}}> <Text disabled style={{fontSize: 15, textAlign: 'center'}}> {'@'+this.props.data.device_id} </Text> </Row>
                         <Row> <Text code style={{fontSize: 15, textAlign: 'center'}}> Location: Room {this.props.data.room_no}</Text></Row>
                         <Row style={{marginTop: 5}}> <Text code> Device Type: {this.props.data.device_type}</Text></Row>
-                        
                     </div>
                 </Col>
 
