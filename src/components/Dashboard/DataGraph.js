@@ -17,37 +17,39 @@ const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
 )
 
 export class MyGraph extends React.Component {
-    componentDidMount(){
-        var api_base_url = http_public_url + ":" + api_port + "/";
-
-        fetch(api_base_url + 'sensordata/RRI', {
-            method: 'GET',
-            headers: dashboardHeaders
-        })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log(data);
-        //   for (var element of data['results']) {
-        //     element["data"] = [{"value": 60, "time": 0}];
-        //     element["battery"] = 60;
-        //     element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
-        //     element["active"] = false;
-        //     element["color"] = randomColor({luminosity: 'dark',});
-        //     this.OnlineSeniors.set(element['device_id'], element);
-        //   }
-        //   this.setState({flag: !this.state.flag});  // Triggers a re-rendering
-        }).catch(err => {
-          console.log(err)
-        });
+    constructor(props){
+        super(props);    
+        // this.graph_type = "RRI";
+        // this.rri_data = [];
+        // this.temp_data = [];
     }
+
+    // componentDidMount(){
+    //     var api_base_url = http_public_url + ":" + api_port + "/";
+
+    //     fetch(api_base_url + 'sensordata/RRI', {
+    //         method: 'GET',
+    //         headers: dashboardHeaders
+    //     })
+    //     .then((response) => response.json())
+    //     .then((data) => {
+    //         console.log(data);
+    //     }).catch(err => {
+    //       console.log(err)
+    //     });
+    // }
 
     render(){
         let ndata = [];
-        for (var i=0; i<this.props.data.data.length; i++){
-            let idata = this.props.data.data[i];
+        let counter = 1;
+        for (var i=0; i < this.props.data.rri_data.length; i++){
+            let idata = this.props.data.rri_data[i];
+
             let ttime = new Date(idata.time * 1000);
-            var stime = ttime.getHours() + ":" + ttime.getMinutes() + ":" + ttime.getSeconds();
-            let item ={"x": stime, "y": idata.value};
+            var stime = ttime.getMinutes() + ":" + ttime.getSeconds();
+            console.log(counter)
+            let item ={"x": counter, "y": idata.value};
+            counter++;
             ndata.push(item);
         }
         
@@ -61,18 +63,18 @@ export class MyGraph extends React.Component {
                 },
             ]}
             xScale={{
-                type: 'time',
-                format: '%H:%M:%S',
-                useUTC: false,
+                type: 'linear',
+                // format: '%M:%S',
+                // useUTC: false,
                 min: 'auto',
                 max: 'auto',
             }}
-            xFormat="time:%H:%M:%S"
+            // xFormat="time:%M:%S"
                  
             yScale={{ 
                 type: 'linear', 
-                min: Device_Description[this.props.data.device_type].graph_min,
-                max: Device_Description[this.props.data.device_type].graph_max, 
+                min: Device_Description["RRI"].graph_min,
+                max: Device_Description["RRI"].graph_max, 
                 stacked: false,
                 reverse: false 
             }}
@@ -80,18 +82,18 @@ export class MyGraph extends React.Component {
             curve="monotoneX"
             colors={{ scheme: 'nivo' }}
             axisBottom={{
-                format: "%H:%M",
-                legend: 'Time',
+                // format: "%M:%S",
+                legend: 'Time (Seconds)',
                 legendOffset: 46,
                 legendPosition: 'middle'
             }}
             axisLeft={{
-                legend: this.props.data.device_type,
+                legend: "RRI",
                 legendPosition: 'middle',
                 legendOffset: -40,
             }}
-            pointSymbol={CustomSymbol}
-            pointSize={10}
+            // pointSymbol={CustomSymbol}
+            pointSize={0.1}
             pointBorderWidth={1}
             pointBorderColor={{
                 from: 'color',
@@ -99,7 +101,6 @@ export class MyGraph extends React.Component {
             }}
             pointLabelYOffset={-12}
             margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-            useMesh={true}
         />
         </>
         );

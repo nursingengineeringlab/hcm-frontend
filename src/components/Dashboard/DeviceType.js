@@ -16,7 +16,7 @@ export const Device_Description = {
         "trigger_min_direction": [700, 650, 550],
         "trigger_max_direction": [1000, 1100, 1200],
         "graph_min": 0,
-        "graph_max": 4000,
+        "graph_max": 1000,
     }, 
     "TEMP": {
         "id": 2,
@@ -107,13 +107,13 @@ export class DeviceModal extends React.Component {
                         arcWidth={0.1} 
                         arcPadding={0.01}
                         percent={0.37} 
-                        formatTextValue={ value => this.props.data.data[this.props.data.data.length-1].value}
+                        formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
                         needleColor={"#AEBAB1"}
                     />}
                 </Col>
             </Row>
             
-            <Row justify='space-around' style={{height: 400}}>
+            <Row justify='space-around' style={{height: 250}}>
                 <MyGraph {...this.props}/>
             </Row>
             </div>

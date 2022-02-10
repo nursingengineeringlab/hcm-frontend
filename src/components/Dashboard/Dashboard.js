@@ -70,9 +70,10 @@ class Dashboard extends Component {
     .then((response) => response.json())
     .then((data) => {
       for (var element of data['results']) {
-        element["data"] = [{"value": 60, "time": 0}];
+        element["rri_data"] = [];
+        element["temp_data"] = [];
         element["battery"] = 60;
-        element["watch"] = exceeded_threshold(element.data[element.data.length - 1].value, element['device_type']);  // determine whether to add to watch list
+        element["watch"] = false;
         element["active"] = false;
         element["color"] = randomColor({luminosity: 'dark',});
         this.OnlineSeniors.set(element['device_id'], element);
@@ -92,13 +93,15 @@ class Dashboard extends Component {
         console.log("New device connected.", packet.device_id);
         packet.active = true;
         this.OnlineSeniors.set(packet.device_id, packet);
-        // this.OnlineSeniors.get(packet.device_id).active = true;
     } else if (packet.command === "update") {
         if(this.OnlineSeniors.has(packet.device_id)) {
-          // const time_now = Date.now();
           let new_data = {"value": packet.value, "time": packet.time};
-          // console.log(packet.device_id, packet.sequence_id, packet.value, time_now, packet.time, time_now - packet.time);    
-          this.OnlineSeniors.get(packet.device_id).data.push(new_data);
+          
+          if(packet.data_type == "RRI") {
+            this.OnlineSeniors.get(packet.device_id).rri_data.push(new_data);
+          } else if ( packet.data_type == "TEMP") {
+            this.OnlineSeniors.get(packet.device_id).temp_data.push(new_data);
+          }
           this.OnlineSeniors.get(packet.device_id).data_type = packet.data_type;
           this.OnlineSeniors.get(packet.device_id).active = true;
           this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
@@ -106,9 +109,9 @@ class Dashboard extends Component {
               this.OnlineSeniors.get(packet.device_id).data_type
           );
           // Maintain array size
-          if(this.OnlineSeniors.get(packet.device_id).data.length > max_array_len){
-            this.OnlineSeniors.get(packet.device_id).data.shift();
-          }
+          // if(this.OnlineSeniors.get(packet.device_id).data.length > max_array_len){
+          //   this.OnlineSeniors.get(packet.device_id).data.shift();
+          // }
         } else {
           console.log("Device not found", packet.device_id);
         }
