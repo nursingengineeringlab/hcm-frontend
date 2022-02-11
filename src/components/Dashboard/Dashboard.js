@@ -27,7 +27,7 @@ const wsclient = new WebSocket(web_socket_url);
 dashboardHeaders.append('Accept', 'application/json');
 
 
-const max_array_len = 10;
+const array_len_24h = 86400;
 
 class Dashboard extends Component {
   
@@ -96,7 +96,7 @@ class Dashboard extends Component {
     } else if (packet.command === "update") {
         if(this.OnlineSeniors.has(packet.device_id)) {
           let new_data = {"value": packet.value, "time": packet.time};
-          
+
           if(packet.data_type == "RRI") {
             this.OnlineSeniors.get(packet.device_id).rri_data.push(new_data);
           } else if ( packet.data_type == "TEMP") {
@@ -109,9 +109,9 @@ class Dashboard extends Component {
               this.OnlineSeniors.get(packet.device_id).data_type
           );
           // Maintain array size
-          // if(this.OnlineSeniors.get(packet.device_id).data.length > max_array_len){
-          //   this.OnlineSeniors.get(packet.device_id).data.shift();
-          // }
+          if(this.OnlineSeniors.get(packet.device_id).rri_data.length > array_len_24h){
+            this.OnlineSeniors.get(packet.device_id).rri_data.shift();
+          }
         } else {
           console.log("Device not found", packet.device_id);
         }
