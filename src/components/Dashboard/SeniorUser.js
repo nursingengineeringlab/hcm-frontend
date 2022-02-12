@@ -70,7 +70,8 @@ class SeniorUser extends React.Component {
               <Col>
                   {this.props.data.active === false ? <FontAwesomeIcon icon={faToggleOff} size="1x"></FontAwesomeIcon> : <DeviceTile
                         device_type={this.props.data.data_type}
-                        current_data={this.props.data.rri_data[ this.props.data.rri_data.length - 1].value}
+                        current_data= {this.props.data.data_type === "RRI" ? this.props.data.rri_data[ this.props.data.rri_data.length - 1].value  :
+                        this.props.data.temp_data[ this.props.data.temp_data.length - 1].value}
                         size={this.props.element_size}
                         watch={this.props.data.watch}
                         textVisible={this.props.textVisible}
