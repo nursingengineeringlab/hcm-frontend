@@ -5,7 +5,6 @@ import SeniorUser from './SeniorUser.js';
 import {Typography, Row, Col} from 'antd';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye, faToggleOff} from '@fortawesome/free-solid-svg-icons'
-// import Device_Description from './device_type.js'
 
 const { Text } = Typography;
 

@@ -19,9 +19,7 @@ const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
 export class MyGraph extends React.Component {
     constructor(props){
         super(props);    
-        // this.graph_type = "RRI";
-        // this.rri_data = [];
-        // this.temp_data = [];
+        this.kind = props.kind
     }
 
     // componentDidMount(){
@@ -42,12 +40,13 @@ export class MyGraph extends React.Component {
     render(){
         let ndata = [];
         let counter = 1;
-        for (var i=0; i < this.props.data.rri_data.length; i++){
-            let idata = this.props.data.rri_data[i];
 
+        let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
+        for (var i=0; i < data_array.length; i++){
+            let idata = data_array[i];
             let ttime = new Date(idata.time * 1000);
-            var stime = ttime.getMinutes() + ":" + ttime.getSeconds();
-            console.log(counter)
+            // var stime = ttime.getMinutes() + ":" + ttime.getSeconds();
+            // console.log(counter)
             let item ={"x": counter, "y": idata.value};
             counter++;
             ndata.push(item);
@@ -73,8 +72,8 @@ export class MyGraph extends React.Component {
                  
             yScale={{ 
                 type: 'linear', 
-                min: Device_Description["RRI"].graph_min,
-                max: Device_Description["RRI"].graph_max, 
+                min: Device_Description[this.kind].graph_min,
+                max: Device_Description[this.kind].graph_max, 
                 stacked: false,
                 reverse: false 
             }}
@@ -88,7 +87,7 @@ export class MyGraph extends React.Component {
                 legendPosition: 'middle'
             }}
             axisLeft={{
-                legend: "RRI",
+                legend: this.kind,
                 legendPosition: 'middle',
                 legendOffset: -40,
             }}
