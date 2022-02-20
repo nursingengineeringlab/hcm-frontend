@@ -20,10 +20,19 @@ const { Content, Footer, Sider } = Layout;
 
 var randomColor = require('randomcolor'); // import the script
 
+// var mqtt    = require('mqtt');
+// var options = {
+//   // protocol: 'mqtts',
+//   username: 'shiywang',
+//   password: 'Wsy920926!@#'
+// }
+
+// var mqtt_client  = mqtt.connect('mqtts://ba344abc818a45729f7fb3de3fc0313f.s1.eu.hivemq.cloud:8884', options);
+
 
 var api_base_url = http_public_url + ":" + api_port + "/";
 var web_socket_url = "ws://127.0.0.1:" + api_port + "/ws/sensor/RR"
-const wsclient = new WebSocket(web_socket_url);
+// const wsclient = new WebSocket(web_socket_url);
 dashboardHeaders.append('Accept', 'application/json');
 
 
@@ -45,23 +54,64 @@ class Dashboard extends Component {
     this.props.logout();
   };
 
+
   componentDidMount(){
+    var mqtt    = require('mqtt');
+    var client  = mqtt.connect('mqtts://ba344abc818a45729f7fb3de3fc0313f.s1.eu.hivemq.cloud:8884', {
+      clientId: 'clientId-K90MhBcEwe',
+      username: 'shiywang',
+      password: 'Wsy920926!@#',
+      keepalive: 60,
+      protocol: 'mqtts'
+    });
+    client.on('connect', function () {
+      console.log('Connected');
+    });
+    
+    client.on('error', function (error) {
+        console.log(error);
+    });
+    
+    client.on('message', function (topic, message) {
+        //Called each time a message is received
+        console.log('Received message:', topic, message.toString());
+    });
+  
 
-    wsclient.onopen = () => {
-      console.log('WebSocket Client Connected');
-    };
 
-    wsclient.onclose = (message) => {
-      console.log(message);
-    };
+    // mqtt_client.on('connect', function () {
+    //   console.log('Connected');
+    // });
+    
+    // mqtt_client.on('connect', function () {
+    //     console.log('Connected');
+    // });
+    
+    // mqtt_client.on('error', function (error) {
+    //     console.log(error);
+    // });
+  
+    // mqtt_client.on('message', function (topic, message) {
+    //   // message is Buffer
+    //   console.log(message.toString())
+    //   mqtt_client.end()
+    // })
+    
+    // wsclient.onopen = () => {
+    //   console.log('WebSocket Client Connected');
+    // };
 
-    wsclient.onerror = (message) => {
-      console.log(message);
-    };
+    // wsclient.onclose = (message) => {
+    //   console.log(message);
+    // };
 
-    wsclient.onmessage = (message) => {
-      this.call_back(message);
-    };
+    // wsclient.onerror = (message) => {
+    //   console.log(message);
+    // };
+
+    // wsclient.onmessage = (message) => {
+    //   this.call_back(message);
+    // };
     
     fetch(api_base_url + 'seniors/', {
         method: 'GET',
