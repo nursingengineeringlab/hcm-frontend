@@ -65,11 +65,7 @@ class Dashboard extends Component {
     // var client = mqtt.connect("wss://ba344abc818a45729f7fb3de3fc0313f.s1.eu.hivemq.cloud:8884", options);
 
     client.on('connect', function () {
-      client.subscribe('emqtt', function (err) {
-        if (!err) {
-          client.publish('emqtt', 'Hello mqtt')
-        }
-      })
+      client.subscribe('emqtt')
     })
     
     client.on('message', function (topic, message) {
