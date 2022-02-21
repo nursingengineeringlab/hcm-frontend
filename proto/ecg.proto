@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package ecg;
+
+message ECGPacket {
+  enum CommandType {
+      NEW = 0;
+      UPDATE = 1;
+  };
+  enum DataType {
+    RRI = 0;
+    TEMP = 1;
+    SPO2 = 2;
+  };
+  CommandType command = 1;
+  string device_id = 2;
+  int32 sequence_id = 3;
+  int32 value = 4;
+  uint32 battery = 5;
+  bool active = 6;
+  uint64 time = 7;
+  DataType data_type = 8;
+}

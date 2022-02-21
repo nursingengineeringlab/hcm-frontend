@@ -16,6 +16,36 @@ import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
 import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
 import mqtt from 'mqtt';
+
+// https://github.com/improbable-eng/grpc-web/issues/96#issuecomment-347871452
+const ecg = require('./ecg_pb');
+
+// const pbjs = require('pbjs');
+// import { load } from "protobufjs";
+
+
+// const schema = pbjs.parseSchema(`
+//   message ECGPacket {
+//     enum CommandType {
+//         NEW = 1;
+//         UPDATE = 2;
+//     }
+//     enum DataType {
+//       RRI = 1;
+//       TEMP = 2;
+//       SPO2 = 3;
+//     }
+//     required CommandType command = 1;
+//     required string device_id = 2;
+//     required int32 sequence_id = 3;
+//     required int32 value = 4;
+//     required uint32 battery = 5;
+//     required bool active = 6;
+//     optional uint64 time = 7;
+//     required DataType data_type = 8 [default = RRI];
+//   }
+// `).compile();
+
 const { Content, Footer, Sider } = Layout;
 
 
@@ -55,7 +85,7 @@ class Dashboard extends Component {
   };
 
 
-  componentDidMount(){
+  componentDidMount(){  
     var options = {
       // username: 'shiywang',
       clientId: 'clientId-K90MhBcEwe',
@@ -69,9 +99,12 @@ class Dashboard extends Component {
     })
     
     client.on('message', function (topic, message) {
-      // message is Buffer
-      console.log(message.toString())
-      // client.end()
+
+      const desData = ecg.ECGPacket.deserializeBinary(message).toObject();
+
+      // const ecgObj = new ECGPacket()
+      // const packet = schema.decodeECGPacket(message);
+      console.log(desData)
     })
     
     client.on('error', function (error) {
@@ -99,49 +132,52 @@ class Dashboard extends Component {
       console.log(err)
     });
 
-  }
+  };
 
-  call_back = e =>  {
+  call_back = (topic, message) =>  {
     // console.log(e.data)
     // var packet = e.data["message"];
-    const packet = JSON.parse(e.data).message;
-    if(packet.command === "new") {
-        console.log("New device connected.", packet.device_id);
-        packet.active = true;
-        this.OnlineSeniors.set(packet.device_id, packet);
-    } else if (packet.command === "update") {
-        if(this.OnlineSeniors.has(packet.device_id)) {
-          let new_data = {"value": packet.value, "time": packet.time};
+    // const packet = JSON.parse(e.data).message;
+    // const packet = ecgpb.ECGPacket.deserializeBinary(e.data).toObject();
+    // const packet = schema.decodeDemo(message);
+    // console.log(packet)
+    // if(packet.command === "new") {
+    //     console.log("New device connected.", packet.device_id);
+    //     packet.active = true;
+    //     this.OnlineSeniors.set(packet.device_id, packet);
+    // } else if (packet.command === "update") {
+    //     if(this.OnlineSeniors.has(packet.device_id)) {
+    //       let new_data = {"value": packet.value, "time": packet.time};
 
-          if(packet.data_type == "RRI") {
-            this.OnlineSeniors.get(packet.device_id).rri_data.push(new_data);
-          } else if ( packet.data_type == "TEMP") {
-            this.OnlineSeniors.get(packet.device_id).temp_data.push(new_data);
-          }
+    //       if(packet.data_type == "RRI") {
+    //         this.OnlineSeniors.get(packet.device_id).rri_data.push(new_data);
+    //       } else if ( packet.data_type == "TEMP") {
+    //         this.OnlineSeniors.get(packet.device_id).temp_data.push(new_data);
+    //       }
           
-          this.OnlineSeniors.get(packet.device_id).data_type = packet.data_type;
-          this.OnlineSeniors.get(packet.device_id).active = true;
-          this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
-              new_data.value,
-              this.OnlineSeniors.get(packet.device_id).data_type
-          );
-          // Maintain array size
-          if(this.OnlineSeniors.get(packet.device_id).rri_data.length > array_len_24h){
-            this.OnlineSeniors.get(packet.device_id).rri_data.shift();
-          }
-          if(this.OnlineSeniors.get(packet.device_id).temp_data.length > array_len_24h){
-            this.OnlineSeniors.get(packet.device_id).temp_data.shift();
-          }
+    //       this.OnlineSeniors.get(packet.device_id).data_type = packet.data_type;
+    //       this.OnlineSeniors.get(packet.device_id).active = true;
+    //       this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
+    //           new_data.value,
+    //           this.OnlineSeniors.get(packet.device_id).data_type
+    //       );
+    //       // Maintain array size
+    //       if(this.OnlineSeniors.get(packet.device_id).rri_data.length > array_len_24h){
+    //         this.OnlineSeniors.get(packet.device_id).rri_data.shift();
+    //       }
+    //       if(this.OnlineSeniors.get(packet.device_id).temp_data.length > array_len_24h){
+    //         this.OnlineSeniors.get(packet.device_id).temp_data.shift();
+    //       }
 
-        } else {
-          console.log("Device not found", packet.device_id);
-        }
-    } else if (packet.command === "close") {
-        packet.active = false;
-        this.OnlineSeniors.get(packet.device_id).active = false;
-        console.log("Device offline", packet.device_id);
-        //this.OnlineSeniors.delete(packet.device_id);
-    }
+    //     } else {
+    //       console.log("Device not found", packet.device_id);
+    //     }
+    // } else if (packet.command === "close") {
+    //     packet.active = false;
+    //     this.OnlineSeniors.get(packet.device_id).active = false;
+    //     console.log("Device offline", packet.device_id);
+    //     //this.OnlineSeniors.delete(packet.device_id);
+    // }
     
     // Triggers a re-rendering
     this.setState({flag: !this.state.flag});  
@@ -157,6 +193,7 @@ class Dashboard extends Component {
     const { collapsed } = this.state;
     return (
       <div>
+        <script src="//cdn.rawgit.com/dcodeIO/protobuf.js/6.X.X/dist/protobuf.js"></script>
         <div className="dash-bgclolor">
         <Navbar className="dash-bgclolor">
           <Navbar.Brand className="text-light">Healthcare Monitor System</Navbar.Brand>
