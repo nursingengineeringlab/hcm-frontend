@@ -98,14 +98,8 @@ class Dashboard extends Component {
       client.subscribe('emqtt')
     })
     
-    client.on('message', function (topic, message) {
-
-      const desData = ecg.ECGPacket.deserializeBinary(message).toObject();
-
-      // const ecgObj = new ECGPacket()
-      // const packet = schema.decodeECGPacket(message);
-      console.log(desData)
-    })
+    
+    client.on('message', this.call_back)
     
     client.on('error', function (error) {
         console.log(error);
@@ -133,54 +127,60 @@ class Dashboard extends Component {
     });
 
   };
+  // function (topic, message) {
 
-  call_back = (topic, message) =>  {
-    // console.log(e.data)
-    // var packet = e.data["message"];
-    // const packet = JSON.parse(e.data).message;
-    // const packet = ecgpb.ECGPacket.deserializeBinary(e.data).toObject();
-    // const packet = schema.decodeDemo(message);
-    // console.log(packet)
-    // if(packet.command === "new") {
-    //     console.log("New device connected.", packet.device_id);
-    //     packet.active = true;
-    //     this.OnlineSeniors.set(packet.device_id, packet);
-    // } else if (packet.command === "update") {
-    //     if(this.OnlineSeniors.has(packet.device_id)) {
-    //       let new_data = {"value": packet.value, "time": packet.time};
+  //   const desData = ecg.ECGPacket.deserializeBinary(message).toObject();
 
-    //       if(packet.data_type == "RRI") {
-    //         this.OnlineSeniors.get(packet.device_id).rri_data.push(new_data);
-    //       } else if ( packet.data_type == "TEMP") {
-    //         this.OnlineSeniors.get(packet.device_id).temp_data.push(new_data);
-    //       }
+  //   this.call_back();
+  //   // const ecgObj = new ECGPacket()
+  //   // const packet = schema.decodeECGPacket(message);
+  //   console.log(desData)
+  //   // this.setState({flag: !this.state.flag}); 
+  // }
+  call_back = (topic, message) => {
+    const packet = ecg.ECGPacket.deserializeBinary(message).toObject();
+    console.log(packet)
+    if(packet.command === 1) {
+        console.log("New device connected.", packet.deviceId);
+        packet.active = true;
+        this.OnlineSeniors.set(packet.deviceId, packet);
+    } else if (packet.command === 2) {
+        if(this.OnlineSeniors.has(packet.deviceId)) {
+          let new_data = {"value": packet.value, "time": packet.time};
+
+          if(packet.dataType == ecg.ECGPacket.DataType.RRI) {
+            this.OnlineSeniors.get(packet.deviceId).rri_data.push(new_data);
+          } else if ( packet.dataType == ecg.ECGPacket.DataType.TEMP) {
+            this.OnlineSeniors.get(packet.deviceId).temp_data.push(new_data);
+          }
           
-    //       this.OnlineSeniors.get(packet.device_id).data_type = packet.data_type;
-    //       this.OnlineSeniors.get(packet.device_id).active = true;
-    //       this.OnlineSeniors.get(packet.device_id).watch = exceeded_threshold(
-    //           new_data.value,
-    //           this.OnlineSeniors.get(packet.device_id).data_type
-    //       );
-    //       // Maintain array size
-    //       if(this.OnlineSeniors.get(packet.device_id).rri_data.length > array_len_24h){
-    //         this.OnlineSeniors.get(packet.device_id).rri_data.shift();
-    //       }
-    //       if(this.OnlineSeniors.get(packet.device_id).temp_data.length > array_len_24h){
-    //         this.OnlineSeniors.get(packet.device_id).temp_data.shift();
-    //       }
+          this.OnlineSeniors.get(packet.deviceId).dataType = packet.dataType;
+          this.OnlineSeniors.get(packet.deviceId).active = true;
+          this.OnlineSeniors.get(packet.deviceId).watch = exceeded_threshold(
+              new_data.value,
+              this.OnlineSeniors.get(packet.deviceId).dataType
+          );
+          // Maintain array size
+          if(this.OnlineSeniors.get(packet.deviceId).rri_data.length > array_len_24h){
+            this.OnlineSeniors.get(packet.deviceId).rri_data.shift();
+          }
+          if(this.OnlineSeniors.get(packet.deviceId).temp_data.length > array_len_24h){
+            this.OnlineSeniors.get(packet.deviceId).temp_data.shift();
+          }
 
-    //     } else {
-    //       console.log("Device not found", packet.device_id);
-    //     }
-    // } else if (packet.command === "close") {
-    //     packet.active = false;
-    //     this.OnlineSeniors.get(packet.device_id).active = false;
-    //     console.log("Device offline", packet.device_id);
-    //     //this.OnlineSeniors.delete(packet.device_id);
-    // }
+        } else {
+          console.log("Device not found", packet.deviceId);
+        }
+
+    } else if (packet.command === "close") {
+        packet.active = false;
+        this.OnlineSeniors.get(packet.deviceId).active = false;
+        console.log("Device offline", packet.deviceId);
+        //this.OnlineSeniors.delete(packet.device_id);
+    }
     
     // Triggers a re-rendering
-    this.setState({flag: !this.state.flag});  
+    this.setState({flag: !this.state.flag}); 
   };
 
   onCollapse = collapsed => {
