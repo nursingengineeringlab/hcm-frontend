@@ -17,56 +17,17 @@ import { logout } from "../Login/LoginActions";
 import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
 import mqtt from 'mqtt';
 
+// import {ECGPacket} from './ecg_pb'
 // https://github.com/improbable-eng/grpc-web/issues/96#issuecomment-347871452
 const ecg = require('./ecg_pb');
-
-// const pbjs = require('pbjs');
-// import { load } from "protobufjs";
-
-
-// const schema = pbjs.parseSchema(`
-//   message ECGPacket {
-//     enum CommandType {
-//         NEW = 1;
-//         UPDATE = 2;
-//     }
-//     enum DataType {
-//       RRI = 1;
-//       TEMP = 2;
-//       SPO2 = 3;
-//     }
-//     required CommandType command = 1;
-//     required string device_id = 2;
-//     required int32 sequence_id = 3;
-//     required int32 value = 4;
-//     required uint32 battery = 5;
-//     required bool active = 6;
-//     optional uint64 time = 7;
-//     required DataType data_type = 8 [default = RRI];
-//   }
-// `).compile();
-
 const { Content, Footer, Sider } = Layout;
-
+const array_len_24h = 1000;
 
 var randomColor = require('randomcolor'); // import the script
 
-// var mqtt    = require('mqtt');
-// var options = {
-//   // protocol: 'mqtts',
-//   username: 'shiywang',
-//   password: 'Wsy920926!@#'
-// }
-
-// var mqtt_client  = mqtt.connect('mqtts://ba344abc818a45729f7fb3de3fc0313f.s1.eu.hivemq.cloud:8884', options);
 
 var api_base_url = http_public_url + ":" + api_port + "/";
-var web_socket_url = "ws://127.0.0.1:" + api_port + "/ws/sensor/RR"
-// const wsclient = new WebSocket(web_socket_url);
 dashboardHeaders.append('Accept', 'application/json');
-
-
-const array_len_24h = 1000;
 
 class Dashboard extends Component {
   
@@ -92,7 +53,6 @@ class Dashboard extends Component {
       // password: 'Wsy920926!@#'
     }
     var client = mqtt.connect("mqtt://localhost:8883", options);
-    // var client = mqtt.connect("wss://ba344abc818a45729f7fb3de3fc0313f.s1.eu.hivemq.cloud:8884", options);
 
     client.on('connect', function () {
       client.subscribe('emqtt')
@@ -140,25 +100,25 @@ class Dashboard extends Component {
   call_back = (topic, message) => {
     const packet = ecg.ECGPacket.deserializeBinary(message).toObject();
     console.log(packet)
-    if(packet.command === 1) {
+    if(packet.command === ecg.ECGPacket.CommandType.NEW) {
         console.log("New device connected.", packet.deviceId);
         packet.active = true;
         this.OnlineSeniors.set(packet.deviceId, packet);
-    } else if (packet.command === 2) {
+    } else if (packet.command === ecg.ECGPacket.CommandType.UPDATE) {
         if(this.OnlineSeniors.has(packet.deviceId)) {
           let new_data = {"value": packet.value, "time": packet.time};
-
-          if(packet.dataType == ecg.ECGPacket.DataType.RRI) {
+          
+          if(packet.dataType === ecg.ECGPacket.DataType.RRI) {
             this.OnlineSeniors.get(packet.deviceId).rri_data.push(new_data);
-          } else if ( packet.dataType == ecg.ECGPacket.DataType.TEMP) {
+          } else if (packet.dataType === ecg.ECGPacket.DataType.TEMP) {
             this.OnlineSeniors.get(packet.deviceId).temp_data.push(new_data);
           }
           
-          this.OnlineSeniors.get(packet.deviceId).dataType = packet.dataType;
+          this.OnlineSeniors.get(packet.deviceId).data_type = packet.dataType === ecg.ECGPacket.DataType.RRI ? "RRI" : "TEMP";
           this.OnlineSeniors.get(packet.deviceId).active = true;
           this.OnlineSeniors.get(packet.deviceId).watch = exceeded_threshold(
               new_data.value,
-              this.OnlineSeniors.get(packet.deviceId).dataType
+              this.OnlineSeniors.get(packet.deviceId).date_type
           );
           // Maintain array size
           if(this.OnlineSeniors.get(packet.deviceId).rri_data.length > array_len_24h){
@@ -172,7 +132,7 @@ class Dashboard extends Component {
           console.log("Device not found", packet.deviceId);
         }
 
-    } else if (packet.command === "close") {
+    } else if (packet.command === ecg.ECGPacket.CommandType.CLOSE) {
         packet.active = false;
         this.OnlineSeniors.get(packet.deviceId).active = false;
         console.log("Device offline", packet.deviceId);

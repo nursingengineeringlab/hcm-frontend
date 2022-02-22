@@ -1,7 +1,7 @@
 import React from 'react';
 import {ResponsiveLine } from '@nivo/line'
 import {Device_Description} from './DeviceType.js'
-import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
+// import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
 
 const CustomSymbol = ({ size, color, borderWidth, borderColor }) => (
     <g>
