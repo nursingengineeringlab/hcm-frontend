@@ -237,7 +237,8 @@ proto.ecg.ECGPacket.serializeBinaryToWriter = function(message, writer) {
  */
 proto.ecg.ECGPacket.CommandType = {
   NEW: 0,
-  UPDATE: 1
+  UPDATE: 1,
+  CLOSE: 2
 };
 
 /**

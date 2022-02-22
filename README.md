@@ -1,3 +1,9 @@
+# Proto gen
+
+```
+protoc --proto_path=./proto --js_out=import_style=commonjs,binary:./src/components/Dashboard ./proto/*.proto
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
