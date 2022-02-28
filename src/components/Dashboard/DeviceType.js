@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeartbeat, faThermometer, faUser, } from '@fortawesome/free-solid-svg-icons'
 import {MyGraph} from './DataGraph.js'
 import GaugeChart from 'react-gauge-chart'
+import { MyGraph1 } from './DataGraph1.js';
 
 const { Text } = Typography;
 
@@ -113,13 +114,17 @@ export class DeviceModal extends React.Component {
                 </Col>
             </Row>
             
-            <Row justify='space-around' style={{height: 250}}>
-                <MyGraph {...this.props} kind={'RRI'}/>
-            </Row>
-            <Row justify='space-around' style={{height: 250}}>
-                <MyGraph {...this.props} kind={'TEMP'}/>
-            </Row>
+            {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'RRI'}/></Row> */}
+            {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'TEMP'}/></Row> */}
+
+            {/* <Row style={{height: 250}}> */}
+                
+            {/* </Row> */}
             </div>
+
+            <div><Row justify='start'><MyGraph1 {...this.props} kind={'RRI'}/></Row></div>
+            <div><Row justify='start'><MyGraph1 {...this.props} kind={'TEMP'}/></Row></div>
+
           </>
       );
     }
