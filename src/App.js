@@ -12,6 +12,9 @@ import Dashboard from './components/Dashboard/Dashboard'
 import requireAuth from "./utils/RequireAuth";
 import axios from "axios";
 import {http_public_url, api_port} from "./config.js"
+import CanvasJSReact from './canvasjs.stock.react';
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
 
 

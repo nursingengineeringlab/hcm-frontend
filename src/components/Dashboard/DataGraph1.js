@@ -1,11 +1,14 @@
 import React from 'react';
-import {CanvasJSChart} from 'canvasjs-react-charts'
- 
+// import {CanvasJSChart} from 'canvasjs-react-charts'
+
+import CanvasJSReact from '../../canvasjs.stock.react';
+var CanvasJS = CanvasJSReact.CanvasJS;
+var CanvasJSStockChart = CanvasJSReact.CanvasJSStockChart;
 
 export class MyGraph1 extends React.Component {
     constructor(props){
         super(props);
-        this.kind = props.kind
+        this.kind = props.kind;
     }
 
 
@@ -22,31 +25,77 @@ export class MyGraph1 extends React.Component {
         console.log(this.kind);
 
         for (var i=0; i < data_array.length; i++){
-            let idata = data_array[i];
             counter++;
-            dataPoints.push({
+            dataPoints.push({	
 				x: counter,
-				y: idata.value
+				y: data_array[i].value
 			});
         }
 
         dataSeries.dataPoints = dataPoints;
 		data.push(dataSeries);
 				
+		// const options = {
+        //     theme: "light2",
+        //     height: 150,
+        //     width: 650,
+		// 	// zoomEnabled: true,
+		// 	// animationEnabled: true,
+		// 	title: {
+		// 		text: this.kind,
+		// 		fontSize: 10,
+		// 		padding: 10,
+		// 	},
+		// 	data: data  // random data
+		// }
 		const options = {
-            theme: "light2",
-            height: 100,
-            width: 350,
-			zoomEnabled: true,
+			theme: "light2",
+			height: 250,
+            width: 650,
+			title:{
+				text: this.kind,
+				fontSize: 20,
+			},
 			animationEnabled: true,
-			// title: {
-			// 	text: this.kind,
-			// },
-			data: data  // random data
-		}
-						
+			exportEnabled: true,
+			charts: [{
+			  data: data
+			}],
+			navigator: {
+				slider: {
+				  minimum: 0,
+				},
+				axisX: {
+				  labelFontColor: "white"
+				}
+			},		  
+			rangeSelector: {
+			  inputFields: {
+				startValue: 4000,
+				endValue: 6000,
+				valueFormatString: "###0"
+			  },
+			  
+			  buttons: [{
+				label: "1s",
+				range: 1000,
+				rangeType: "number"
+			  },{
+				label: "1m",
+				range: 2000,
+				rangeType: "number"
+			  },{
+				label: "1h",
+				range: 5000,
+				rangeType: "number"
+			  },{
+				label: "24h",        
+				rangeType: "all"
+			  }]
+			}
+		  };			
 		return (
-		    <div><CanvasJSChart options={options} onRef={ref => this.chart = ref}/></div>
+		    <div><CanvasJSStockChart options={options} onRef={ref => this.chart = ref}/></div>
 		);
 	} 			
 }

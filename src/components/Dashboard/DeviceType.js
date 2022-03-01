@@ -85,8 +85,10 @@ export class DeviceModal extends React.Component {
     render() { 
       return (
           <>
-            <div  style={{padding: 30, width: '100%'}}>
+            <div style={{padding: 30, width: '100%'}}>
             <Row justify='space-around'>
+
+                {/* Personal Info */}
                 <Col style={styles.pinfo} span={11}>
                     <div width="100%">
                         <Text style={{fontSize: 15, textAlign: 'center'}}> <FontAwesomeIcon color={this.props.data.color} icon={faUser} size="1x" style={{marginRight: 10}}/> Personal Info</Text>
@@ -108,12 +110,15 @@ export class DeviceModal extends React.Component {
                         arcWidth={0.1} 
                         arcPadding={0.01}
                         percent={0.37} 
-                        formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
+                        // formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
                         needleColor={"#AEBAB1"}
                     />}
                 </Col>
+
             </Row>
-            
+            <Row justify='start' span={24}><MyGraph1 {...this.props} kind={'RRI'}/></Row>
+            <Row justify='start' span={24}><MyGraph1 {...this.props} kind={'TEMP'}/></Row>
+
             {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'RRI'}/></Row> */}
             {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'TEMP'}/></Row> */}
 
@@ -122,8 +127,7 @@ export class DeviceModal extends React.Component {
             {/* </Row> */}
             </div>
 
-            <div><Row justify='start'><MyGraph1 {...this.props} kind={'RRI'}/></Row></div>
-            <div><Row justify='start'><MyGraph1 {...this.props} kind={'TEMP'}/></Row></div>
+            {/* <div><Row justify='start'><MyGraph1 {...this.props} kind={'TEMP'}/></Row></div> */}
 
           </>
       );
