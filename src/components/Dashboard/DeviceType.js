@@ -3,9 +3,7 @@ import {Typography, Row, Col, Divider} from 'antd';
 import "antd/dist/antd.css";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeartbeat, faThermometer, faUser, } from '@fortawesome/free-solid-svg-icons'
-import {MyGraph} from './DataGraph.js'
 import GaugeChart from 'react-gauge-chart'
-import { MyGraph1 } from './DataGraph1.js';
 import {Plott} from './Plot.js'
 
 const { Text } = Typography;

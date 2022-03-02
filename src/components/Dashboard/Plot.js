@@ -6,12 +6,15 @@ export class Plott extends React.Component {
         super(props);
         this.kind = props.kind;
     }
+    
     state = {
+        index: 0,
         timer: new Date().getTime(),
-        line1: {
+        line: {
           x: [],
-          y: [], 
-          name: 'ECG'
+          y: [],
+          name: this.kind,
+          line: {color: this.props.kind === "RRI" ? '#FF3333' : '#3368FF'}
         },
         layout: { 
           datarevision: 0,
@@ -52,36 +55,38 @@ export class Plott extends React.Component {
         },
         revision: 0,
     }
+
     componentDidMount() {
         setInterval(this.increaseGraphic, 1000);
     } 
 
     rand = () => parseInt(Math.random() * 100 + this.state.revision, 10);
     
-//         let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
-//         console.log(this.kind);
-
-//         for (var i=0; i < data_array.length; i++){
-//             counter++;
-//             dataPoints.push({	
-// 				x: counter,
-// 				y: data_array[i].value
-// 			});
-//         }
-
+    
     increaseGraphic = () => {
-        const { line1, layout } = this.state;
-        console.log(this.state.timer);
-        this.state.timer += 1000;
-        line1.x.push(this.state.timer);
-        if(this.kind == "RRI") {
-          line1.y.push(this.rand());
-        } else {
-          line1.y.push(this.rand()+100);
-        }
-        if (line1.x.length >= 1000) {
-          line1.x.shift();
-          line1.y.shift();
+        const { line, layout } = this.state;
+
+        var x_push = () => {
+          let step = this.kind === "RRI" ? 1000 : 5000;
+          this.state.timer += step;
+          line.x.push(this.state.timer);
+        };
+        
+        
+        var y_push = () => {
+          let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
+          if(this.state.index < data_array.length) {
+            line.y.push(data_array[this.state.index].value);
+            this.state.index++;
+          }        
+        };
+
+        x_push();
+        y_push();
+        
+        if (line.x.length >= 1000) {
+          line.x.shift();
+          line.y.shift();
         }
         this.setState({ revision: this.state.revision + 1 });
         layout.datarevision = this.state.revision + 1;
@@ -92,9 +97,7 @@ export class Plott extends React.Component {
 
         return (
         <Plot
-            data={[
-                this.state.line1,
-              ]}
+            data={[this.state.line,]}
             layout={this.state.layout}
             revision={this.state.revision}
         />
