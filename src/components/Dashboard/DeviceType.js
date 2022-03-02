@@ -6,6 +6,7 @@ import { faHeartbeat, faThermometer, faUser, } from '@fortawesome/free-solid-svg
 import {MyGraph} from './DataGraph.js'
 import GaugeChart from 'react-gauge-chart'
 import { MyGraph1 } from './DataGraph1.js';
+import {Plott} from './Plot.js'
 
 const { Text } = Typography;
 
@@ -116,8 +117,8 @@ export class DeviceModal extends React.Component {
                 </Col>
 
             </Row>
-            <Row justify='start' span={24}><MyGraph1 {...this.props} kind={'RRI'}/></Row>
-            <Row justify='start' span={24}><MyGraph1 {...this.props} kind={'TEMP'}/></Row>
+            <Row justify='start' span={24}><Plott {...this.props} kind={'RRI'}/></Row>
+            <Row justify='start' span={24}><Plott {...this.props} kind={'TEMP'}/></Row>
 
             {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'RRI'}/></Row> */}
             {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'TEMP'}/></Row> */}

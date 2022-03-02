@@ -100,8 +100,7 @@ export class MyGraph extends React.Component {
             }}
             pointLabelYOffset={-12}
             margin={{ top: 50, right: 50, bottom: 50, left: 50 }}
-        />
-        </>
+        /></>
         );
     }
 
