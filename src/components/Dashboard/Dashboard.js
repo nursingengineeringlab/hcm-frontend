@@ -48,14 +48,12 @@ class Dashboard extends Component {
 
   componentDidMount(){  
     var options = {
-      // username: 'shiywang',
       clean: true,
       connectTimeout: 4000,
       // Auth
       clientId: 'emqx_test',
       username: 'emqx_test',
       password: 'emqx_test',
-          // password: 'Wsy920926!@#'
     }
     console.log("haha");
     const WebSocket_URL = 'ws://localhost:8083/mqtt'
@@ -111,6 +109,9 @@ class Dashboard extends Component {
         console.log("New device connected.", packet.deviceId);
         packet.active = true;
         this.OnlineSeniors.set(packet.deviceId, packet);
+        this.OnlineSeniors[packet.deviceId].rri_data = new Array();
+        this.OnlineSeniors[packet.deviceId].temp_data = new Array();
+
     } else if (packet.command === ecg.ECGPacket.CommandType.UPDATE) {
         if(this.OnlineSeniors.has(packet.deviceId)) {
           let new_data = {"value": packet.value, "time": packet.time};
