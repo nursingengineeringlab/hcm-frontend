@@ -49,10 +49,18 @@ class Dashboard extends Component {
   componentDidMount(){  
     var options = {
       // username: 'shiywang',
-      clientId: 'clientId-K90MhBcEwe',
-      // password: 'Wsy920926!@#'
+      clean: true,
+      connectTimeout: 4000,
+      // Auth
+      clientId: 'emqx_test',
+      username: 'emqx_test',
+      password: 'emqx_test',
+          // password: 'Wsy920926!@#'
     }
-    var client = mqtt.connect("mqtt://localhost:8883", options);
+    console.log("haha");
+    const WebSocket_URL = 'ws://localhost:8083/mqtt'
+
+    var client = mqtt.connect(WebSocket_URL, options);
 
     client.on('connect', function () {
       client.subscribe('emqtt')
@@ -87,10 +95,9 @@ class Dashboard extends Component {
     });
 
   };
+
   // function (topic, message) {
-
   //   const desData = ecg.ECGPacket.deserializeBinary(message).toObject();
-
   //   this.call_back();
   //   // const ecgObj = new ECGPacket()
   //   // const packet = schema.decodeECGPacket(message);
