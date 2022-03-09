@@ -14,7 +14,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
-import {http_public_url, api_port, dashboardHeaders} from "../../config.js"
+import {http_public_url, mqtt_url, api_port, dashboardHeaders} from "../../config.js"
 import mqtt from 'mqtt';
 
 // import {ECGPacket} from './ecg_pb'
@@ -55,10 +55,8 @@ class Dashboard extends Component {
       username: 'emqx_test',
       password: 'emqx_test',
     }
-    console.log("haha");
-    const WebSocket_URL = 'ws://localhost:8083/mqtt'
 
-    var client = mqtt.connect(WebSocket_URL, options);
+    var client = mqtt.connect(mqtt_url, options);
 
     client.on('connect', function () {
       client.subscribe('emqtt')
