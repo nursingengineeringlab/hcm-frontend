@@ -51,7 +51,7 @@ class Dashboard extends Component {
       clean: true,
       connectTimeout: 4000,
       // Auth
-      clientId: 'emqx_test',
+      clientId: 'hcm_frontend',
       username: 'emqx_test',
       password: 'emqx_test',
     }
