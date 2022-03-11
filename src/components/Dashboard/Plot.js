@@ -1,5 +1,11 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
+import {http_public_url, data_fetcher_port, dashboardHeaders} from "../../config.js"
+
+
+var test_url = "http://localhost"
+var datafetcher_base_url = test_url + ":" + data_fetcher_port + "/";
+
 
 export class Plott extends React.Component {
     constructor(props){
@@ -8,7 +14,8 @@ export class Plott extends React.Component {
     }
     
     state = {
-        index: 0,
+        xindex: 0,
+        yindex: 0,
         timer: new Date().getTime(),
         line: {
           x: [],
@@ -57,6 +64,30 @@ export class Plott extends React.Component {
     }
 
     componentDidMount() {
+        var deviceId = this.props.data.device_id
+        var endTime = Date.now();
+
+        const { line, layout } = this.state;
+
+        const endpoint = datafetcher_base_url + 'graph?deviceId=' + deviceId + '&endTime=' + endTime.toString();
+        console.log(endpoint);
+
+        fetch(endpoint, {
+          method: 'GET',
+          headers: dashboardHeaders
+        })
+        .then((response) => response.json())
+        .then((data) => {
+          for (var element of data) {
+            console.log(element)
+            line.x.push(element["Timestamp"])
+            line.y.push(element["Value"])
+          }
+          // this.setState({flag: !this.state.flag});  // Triggers a re-rendering
+        }).catch(err => {
+          console.log(err);
+        });
+        
         setInterval(this.increaseGraphic, 1000);
     } 
 
@@ -67,18 +98,21 @@ export class Plott extends React.Component {
         const { line, layout } = this.state;
 
         var x_push = () => {
-          let step = this.kind === "RRI" ? 1000 : 5000;
-          this.state.timer += step;
-          line.x.push(this.state.timer);
+          // let step = this.kind === "RRI" ? 1000 : 5000;
+          let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
+          if(this.state.xindex < data_array.length) {
+            line.x.push(data_array[this.state.xindex].time);
+            this.state.xindex++;
+          }
         };
         
         
         var y_push = () => {
           let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
-          if(this.state.index < data_array.length) {
-            line.y.push(data_array[this.state.index].value);
-            this.state.index++;
-          }        
+          if(this.state.yindex < data_array.length) {
+            line.y.push(data_array[this.state.yindex].value);
+            this.state.yindex++;
+          }
         };
 
         x_push();
@@ -94,7 +128,6 @@ export class Plott extends React.Component {
     
 
     render() {
-
         return (
         <Plot
             data={[this.state.line,]}
