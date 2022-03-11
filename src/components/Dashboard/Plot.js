@@ -16,7 +16,6 @@ export class Plott extends React.Component {
     state = {
         xindex: 0,
         yindex: 0,
-        timer: new Date().getTime(),
         line: {
           x: [],
           y: [],
@@ -70,7 +69,7 @@ export class Plott extends React.Component {
         const { line, layout } = this.state;
 
         const endpoint = datafetcher_base_url + 'graph?deviceId=' + deviceId + '&endTime=' + endTime.toString();
-        console.log(endpoint);
+        // console.log(endpoint);
 
         fetch(endpoint, {
           method: 'GET',
@@ -83,7 +82,6 @@ export class Plott extends React.Component {
             line.x.push(element["Timestamp"])
             line.y.push(element["Value"])
           }
-          // this.setState({flag: !this.state.flag});  // Triggers a re-rendering
         }).catch(err => {
           console.log(err);
         });
@@ -98,7 +96,6 @@ export class Plott extends React.Component {
         const { line, layout } = this.state;
 
         var x_push = () => {
-          // let step = this.kind === "RRI" ? 1000 : 5000;
           let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
           if(this.state.xindex < data_array.length) {
             line.x.push(data_array[this.state.xindex].time);
