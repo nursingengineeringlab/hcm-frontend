@@ -109,7 +109,7 @@ export class DeviceModal extends React.Component {
                         arcWidth={0.1} 
                         arcPadding={0.01}
                         percent={0.37} 
-                        formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
+                        // formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
                         needleColor={"#AEBAB1"}
                     />}
                 </Col>
