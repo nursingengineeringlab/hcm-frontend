@@ -68,9 +68,10 @@ export class Plott extends React.Component {
 
         const { line, layout } = this.state;
 
-        const endpoint = datafetcher_base_url + 'graph?deviceId=' + deviceId + '&endTime=' + endTime.toString();
-        // console.log(endpoint);
+        const endpoint = datafetcher_base_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString();
 
+        console.log(endpoint)
+        
         fetch(endpoint, {
           method: 'GET',
           headers: dashboardHeaders
