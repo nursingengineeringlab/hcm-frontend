@@ -3,7 +3,7 @@ import Plot from 'react-plotly.js';
 import {http_public_url, data_fetcher_port, dashboardHeaders} from "../../config.js"
 
 
-var test_url = "http://localhost"
+var test_url = "http://172.24.41.85"
 var datafetcher_base_url = test_url + ":" + data_fetcher_port + "/";
 
 
@@ -68,7 +68,7 @@ export class Plott extends React.Component {
 
         const { line, layout } = this.state;
 
-        const endpoint = datafetcher_base_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString();
+        const endpoint = datafetcher_base_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&count=300';
 
         console.log(endpoint)
         
@@ -79,7 +79,7 @@ export class Plott extends React.Component {
         .then((response) => response.json())
         .then((data) => {
           for (var element of data) {
-            console.log(element)
+            // console.log(element)
             line.x.push(element["Timestamp"])
             line.y.push(element["Value"])
           }
