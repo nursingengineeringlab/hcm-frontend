@@ -1,9 +1,9 @@
 import React from 'react';
 import Plot from 'react-plotly.js';
-import {data_fetcher_url, data_fetcher_port, dashboardHeaders} from "../../config.js"
+import {data_fetcher_http_url, data_fetcher_port, dashboardHeaders} from "../../config.js"
 
 
-var datafetcher_base_url = data_fetcher_url + ":" + data_fetcher_port + "/";
+var datafetcher_base_url = data_fetcher_http_url + ":" + data_fetcher_port + "/";
 
 
 export class Plott extends React.Component {
