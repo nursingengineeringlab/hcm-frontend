@@ -18,7 +18,15 @@ export class Plott extends React.Component {
         line: {
           x: [],
           y: [],
-          name: this.kind,
+          name: this.props.kind,
+          connectgaps: false,
+          line: {color: this.props.kind === "RRI" ? '#FF3333' : '#3368FF'}
+        },
+        oldline: {
+          x: [],
+          y: [],
+          name: this.props.kind + ' last 6 hours',
+          connectgaps: false,
           line: {color: this.props.kind === "RRI" ? '#FF3333' : '#3368FF'}
         },
         layout: { 
@@ -33,6 +41,18 @@ export class Plott extends React.Component {
                   count: 1,
                   label: '1s',
                   step: 'second',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 5,
+                  label: '5m',
+                  step: 'minute',
+                  stepmode: 'backward'
+                },
+                {
+                  count: 10,
+                  label: '10m',
+                  step: 'minute',
                   stepmode: 'backward'
                 },
                 {
@@ -62,63 +82,83 @@ export class Plott extends React.Component {
     }
 
     componentDidMount() {
-        var deviceId = this.props.data.device_id
-        var endTime = Date.now();
-
-        const { line, layout } = this.state;
-
-        const endpoint = datafetcher_base_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&count=300';
-
-        console.log(endpoint)
-        
-        fetch(endpoint, {
-          method: 'GET',
-          headers: dashboardHeaders
-        })
-        .then((response) => response.json())
-        .then((data) => {
-          for (var element of data) {
-            // console.log(element)
-            line.x.push(element["Timestamp"])
-            line.y.push(element["Value"])
-          }
-        }).catch(err => {
-          console.log(err);
-        });
-        
+        this.fetchFromRedis();
         setInterval(this.increaseGraphic, 1000);
     } 
 
-    rand = () => parseInt(Math.random() * 100 + this.state.revision, 10);
+    // rand = () => parseInt(Math.random() * 100 + this.state.revision, 10);
     
-    
+    fetchFromRedis = () => {
+      const onehourMillsec = 3600000;
+      const sixhoursMillsec = 21600000;
+      var deviceId = this.props.data.device_id
+      var endTime = Date.now();
+      var startTime = endTime - sixhoursMillsec;
+
+      const { oldline } = this.state;
+
+      const endpoint = datafetcher_base_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
+
+      console.log(endpoint)
+      
+      fetch(endpoint, {
+        method: 'GET',
+        headers: dashboardHeaders
+      })
+      .then((response) => response.json())
+      .then((data) => {
+        if(data) {
+          for (var element of data) {
+            oldline.x.push(element["Timestamp"])
+            oldline.y.push(element["Value"])
+          }
+        }
+      }).catch(err => {
+        console.log(err);
+      });
+    }
+
     increaseGraphic = () => {
         const { line, layout } = this.state;
 
-        var x_push = () => {
-          let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
-          if(this.state.xindex < data_array.length) {
+        var x_push = (data_array) => {
+          console.log("x index is: ", this.state.xindex);
+          console.log("data_arry.length is", data_array.length)
+          while(this.state.xindex < data_array.length) {
             line.x.push(data_array[this.state.xindex].time);
             this.state.xindex++;
           }
         };
         
         
-        var y_push = () => {
-          let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
-          if(this.state.yindex < data_array.length) {
+        var y_push = (data_array) => {
+          console.log("y index is: ", this.state.yindex);
+          console.log("data_arry.length is", data_array.length)
+          while(this.state.yindex < data_array.length) {
             line.y.push(data_array[this.state.yindex].value);
             this.state.yindex++;
           }
         };
 
-        x_push();
-        y_push();
-        
-        if (line.x.length >= 1000) {
-          line.x.shift();
-          line.y.shift();
+        // var x_y_push = () => {
+        //   let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
+        //   for (var element of data_array) {
+        //     console.log(element)
+        //     line.x.push(element.time)
+        //     line.y.push(element.value)
+        //   }
+        // }
+        let data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
+        if(data_array.length != 0) {
+          x_push(data_array);
+          y_push(data_array);
         }
+        // x_y_push();
+        
+        // if (line.x.length >= 1000) {
+        //   line.x.shift();
+        //   line.y.shift();
+        // }
         this.setState({ revision: this.state.revision + 1 });
         layout.datarevision = this.state.revision + 1;
     }
@@ -127,7 +167,7 @@ export class Plott extends React.Component {
     render() {
         return (
         <Plot
-            data={[this.state.line,]}
+            data={[this.state.line, this.state.oldline]}
             layout={this.state.layout}
             revision={this.state.revision}
         />
