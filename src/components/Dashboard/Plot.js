@@ -16,6 +16,7 @@ export class Plott extends React.Component {
         xindex: 0,
         yindex: 0,
         line: {
+          type: 'scatter',
           x: [],
           y: [],
           name: this.props.kind,
@@ -23,6 +24,7 @@ export class Plott extends React.Component {
           line: {color: this.props.kind === "RRI" ? '#FF3333' : '#3368FF'}
         },
         oldline: {
+          type: 'scatter',
           x: [],
           y: [],
           name: this.props.kind + ' last 6 hours',
