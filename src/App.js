@@ -7,14 +7,14 @@ import { ToastContainer } from "react-toastify";
 import Home from "./components/Home";
 import Signup from "./components/Signup/Signup";
 import Login from "./components/Login/Login";
-// import Dashboard from "../public/Dashboard";
 import Dashboard from './components/Dashboard/Dashboard'
 import requireAuth from "./utils/RequireAuth";
 import axios from "axios";
-import {http_public_url, api_port} from "./config.js"
+import {http_public_url} from "./config.js"
 
 
-axios.defaults.baseURL = http_public_url + ":" + api_port
+
+axios.defaults.baseURL = http_public_url
 // axios.defaults.headers["Authorization"] = token ? `Token ${token} : null`;
 class App extends Component {
   render() {
