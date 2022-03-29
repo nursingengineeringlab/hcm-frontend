@@ -26,7 +26,7 @@ const array_len_24h = 1000;
 var randomColor = require('randomcolor'); // import the script
 
 
-var api_base_url = http_public_url + ":" + api_port + "/";
+var api_base_url = http_public_url + "/";
 dashboardHeaders.append('Accept', 'application/json');
 
 class Dashboard extends Component {
