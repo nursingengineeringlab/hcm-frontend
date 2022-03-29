@@ -31,7 +31,7 @@ export class Plott extends React.Component {
           y: [],
           name: this.props.kind + ' last 6 hours',
           connectgaps: false,
-          line: {color: this.props.kind === "RRI" ? '#FF3333' : '#3368FF'}
+          line: {color: this.props.kind === "RRI" ? '#FF3373' : '#9392FF'}
         },
         layout: { 
           datarevision: 0,
