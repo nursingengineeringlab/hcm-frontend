@@ -57,7 +57,8 @@ class Dashboard extends Component {
       rejectUnauthorized: true,
       protocol: 'mqtts',
     }
-
+    console.log(process.env.SSL_KEY_FILE)
+    console.log(process.env.SSL_CRT_FILE)
     var client = mqtt.connect(mqtt_url, options);
 
     client.on('connect', function () {
