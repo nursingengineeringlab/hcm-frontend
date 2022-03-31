@@ -3,9 +3,7 @@ import { Layout, Menu} from 'antd';
 import "antd/dist/antd.css";
 import "./Dashboard.css"
 import {
-  SearchOutlined,
   TeamOutlined,
-  UserOutlined,
 } from '@ant-design/icons';
 import UserList from './UserList.js'
 import {exceeded_threshold} from './DeviceType.js'
@@ -14,7 +12,7 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
-import {http_public_url, mqtt_url, api_port, dashboardHeaders} from "../../config.js"
+import {http_public_url, mqtt_url, dashboardHeaders} from "../../config.js"
 import mqtt from 'mqtt';
 
 // import {ECGPacket} from './ecg_pb'
@@ -26,11 +24,7 @@ const array_len_24h = 1000;
 var randomColor = require('randomcolor'); // import the script
 
 
-<<<<<<< HEAD
-var api_base_url = http_public_url + "/";
-=======
 var api_base_url = http_public_url;
->>>>>>> 5a0f9618e0bbf005021efeefdf65c91259cbdfbe
 dashboardHeaders.append('Accept', 'application/json');
 
 class Dashboard extends Component {
@@ -50,7 +44,7 @@ class Dashboard extends Component {
   };
 
 
-  componentDidMount(){  
+  componentDidMount(){
     var options = {
       clean: true,
       connectTimeout: 4000,
@@ -58,6 +52,10 @@ class Dashboard extends Component {
       clientId: 'hcm_frontend',
       username: 'emqx_test',
       password: 'emqx_test',
+      key: process.env.SSL_KEY_FILE,
+      cert: process.env.SSL_CRT_FILE,
+      rejectUnauthorized: true,
+      protocol: 'mqtts',
     }
 
     var client = mqtt.connect(mqtt_url, options);

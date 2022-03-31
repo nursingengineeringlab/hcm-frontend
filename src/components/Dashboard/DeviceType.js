@@ -17,21 +17,21 @@ export const Device_Description = {
         "trigger_max_direction": [1000, 1100, 1200],
         "graph_min": 0,
         "graph_max": 1000,
-    }, 
+    },
     "TEMP": {
         "id": 2,
         "watch_threshold_min": 95,
         "watch_threshold_max": 99.5,
-        "trigger_min_direction": [97, 96.5, 96],      
+        "trigger_min_direction": [97, 96.5, 96],
         "trigger_max_direction": [99.5, 100.0, 100.9],
         "graph_min": -20,
         "graph_max": 150,
-    }, 
+    },
     "SPO2": {
         "id": 3,
         "watch_threshold_min": 95,
         "watch_threshold_max": 99.5,
-        "trigger_min_direction": [95, 93, 90],      
+        "trigger_min_direction": [95, 93, 90],
         "trigger_max_direction": [100, 100.0, 100],
         "graph_min": 94,
         "graph_max": 102,
@@ -42,7 +42,7 @@ const tColor = "#ff0800";
 
 export const exceeded_threshold = (val, device_type) =>{
     if(device_type in  Device_Description){
-        if( (Device_Description[device_type].watch_threshold_max < val) || 
+        if( (Device_Description[device_type].watch_threshold_max < val) ||
             (Device_Description[device_type].watch_threshold_min > val)
         ) {
             return true;
@@ -61,7 +61,7 @@ export class DeviceTile extends React.Component {
             <Row justify='space-around'>
                 <Col>
                     <Text code style={{}}>
-                        {this.props.device_type === "RRI" ? <Text><FontAwesomeIcon icon={faHeartbeat} size="1x"/>RRI</Text> : 
+                        {this.props.device_type === "RRI" ? <Text><FontAwesomeIcon icon={faHeartbeat} size="1x"/>RRI</Text> :
                         <Text><FontAwesomeIcon icon={faThermometer} size="1x"/>TEMP</Text>}
                     </Text>
                 </Col>

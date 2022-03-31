@@ -13,12 +13,10 @@ import axios from "axios";
 import {http_public_url} from "./config.js"
 
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 5a0f9618e0bbf005021efeefdf65c91259cbdfbe
 axios.defaults.baseURL = http_public_url
-// axios.defaults.headers["Authorization"] = token ? `Token ${token} : null`;
+// axios.defaults.headers["Authorization"] = token ? `Token ${token}` : null
+
+
 class App extends Component {
   render() {
     return (
