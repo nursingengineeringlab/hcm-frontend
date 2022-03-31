@@ -14,6 +14,7 @@ import { withRouter } from "react-router-dom";
 import { logout } from "../Login/LoginActions";
 import {http_public_url, mqtt_url, dashboardHeaders} from "../../config.js"
 import mqtt from 'mqtt';
+import env from "react-dotenv";
 
 // import {ECGPacket} from './ecg_pb'
 // https://github.com/improbable-eng/grpc-web/issues/96#issuecomment-347871452
@@ -45,6 +46,11 @@ class Dashboard extends Component {
 
 
   componentDidMount(){
+
+    console.log(env)
+    console.log(env.SSL_KEY_FILE)
+    console.log(env.SSL_CRT_FILE)
+
     var options = {
       clean: true,
       connectTimeout: 4000,
@@ -52,13 +58,11 @@ class Dashboard extends Component {
       clientId: 'hcm_frontend',
       username: 'emqx_test',
       password: 'emqx_test',
-      key: process.env.SSL_KEY_FILE,
-      cert: process.env.SSL_CRT_FILE,
+      key: env.SSL_KEY_FILE,
+      cert: env.SSL_CRT_FILE,
       rejectUnauthorized: true,
       protocol: 'mqtts',
     }
-    console.log(process.env.SSL_KEY_FILE)
-    console.log(process.env.SSL_CRT_FILE)
     var client = mqtt.connect(mqtt_url, options);
 
     client.on('connect', function () {
