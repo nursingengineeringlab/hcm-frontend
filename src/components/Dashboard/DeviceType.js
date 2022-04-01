@@ -115,7 +115,7 @@ export class DeviceModal extends React.Component {
                 </Col>
 
             </Row>
-            <Row justify='start' span={24}><Plott {...this.props} kind={'RRI'}/></Row>
+            <Row style={{width: '100%'}} justify='start' span={24}><Plott {...this.props} kind={'RRI'}/></Row>
             <Row justify='start' span={24}><Plott {...this.props} kind={'TEMP'}/></Row>
 
             {/* <Row justify='space-around' style={{height: 250}}><MyGraph {...this.props} kind={'RRI'}/></Row> */}
