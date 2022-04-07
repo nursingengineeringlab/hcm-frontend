@@ -122,13 +122,13 @@ export class Graph extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if(data) {
+          lastX = data[0]["Timestamp"];
+          lastY = data[0]["Value"];
+          console.log(lastX);
+          console.log(lastY);
           for (var element of data) {
             oldline.x.push(element["Timestamp"])
             oldline.y.push(element["Value"])
-            lastX = element["Timestamp"];
-            lastY = element["Value"];
-            console.log(lastX);
-            console.log(lastY);      
           }
         }
       }).catch(err => {
