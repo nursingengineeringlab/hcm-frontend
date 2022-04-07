@@ -32,6 +32,8 @@ export class Graph extends React.Component {
           line: {color: this.props.kind === "RRI" ? '#FF3373' : '#9392FF'}
         },
         layout: { 
+          autosize: true,
+          automargin: true,
           datarevision: 0,
           title: this.kind,
           xaxis: {
@@ -134,7 +136,7 @@ export class Graph extends React.Component {
       //assign first line datapoint to last datapoint of oldline
       console.log(lastX);
       console.log(lastY);
-      
+
       line.x.push(lastX);
       this.state.xindex++;
       line.y.push(lastY);
