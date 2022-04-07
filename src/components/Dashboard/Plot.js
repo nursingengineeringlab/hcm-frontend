@@ -105,7 +105,9 @@ export class Plott extends React.Component {
       var endTime = Date.now();
       var startTime = endTime - sixhoursMillsec;
 
-      const { oldline } = this.state;
+      const { line, oldline } = this.state;
+      line.x = [];
+      line.y = [];
 
       const endpoint = data_fetcher_http_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
 
@@ -172,7 +174,7 @@ export class Plott extends React.Component {
             data={[this.state.line, this.state.oldline]}
             layout={this.state.layout}
             revision={this.state.revision}
-            onClick={this.fetchFromRedis}
+            onAfterPlot={this.fetchFromRedis}
         />
         );
   }
