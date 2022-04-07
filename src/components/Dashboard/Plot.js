@@ -103,8 +103,6 @@ export class Graph extends React.Component {
       var deviceId = this.props.data.device_id
       var endTime = Date.now();
       var startTime = endTime - sixhoursMillsec;
-      var lastX = 0;
-      var lastY = 0;
       const { line, oldline } = this.state;
 
       //clear out current line content
@@ -113,7 +111,7 @@ export class Graph extends React.Component {
 
       const endpoint = data_fetcher_http_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
 
-      // console.log(endpoint)
+      console.log(endpoint)
       // reload oldline from datafetcher REST API (redis)
       fetch(endpoint, {
         method: 'GET',
@@ -124,8 +122,6 @@ export class Graph extends React.Component {
         if(data) {
           line.x[0] = data[0]["Timestamp"];
           line.y[0] = data[0]["Value"];
-          console.log(lastX);
-          console.log(lastY);
           for (var element of data) {
             oldline.x.push(element["Timestamp"])
             oldline.y.push(element["Value"])
