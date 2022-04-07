@@ -15,17 +15,16 @@ class SeniorUser extends React.Component {
     this.state = {
       collapsed: false,
       isModalVisible: false,
-    };  
+    };
+    this.props.mouseClick = 0;
   }
-
-  componentDidMount(){ }
 
   senior_object = () => {
 
     const bulk_watch_style = {fontSize: 14, fontWeight: "bold", color: this.props.textVisible ? '#ff0800' : '#dcdcdc', padding: 2, borderRadius: 4,};
     const bulk_normal_style = {fontSize: 14, padding: 2};
 
-    return (  
+    return (
       <>{ 
       this.props.element_size === 1 ?
 
@@ -115,6 +114,7 @@ class SeniorUser extends React.Component {
 
   ModelOpen = () =>{
     this.setState({isModalVisible: true});
+    this.props.mouseClick++;
   }
 
   render() {
@@ -124,7 +124,7 @@ class SeniorUser extends React.Component {
       <div 
         style = { this.props.element_size === 1 ? styles.card_div : styles.card_div_small} 
         flex ='auto'
-        onClick = {this.ModelOpen} 
+        onClick = {this.ModelOpen}
         onMouseOver={this.MouseOver} onMouseOut={this.MouseOut}
       >
         {this.senior_object()}
@@ -135,8 +135,7 @@ class SeniorUser extends React.Component {
           onOk={this.ModelClose} 
           onCancel={this.ModelClose} 
           width={'60%'}
-          title="More ..."
-        >
+          title="More ...">
           <DeviceModal {...this.props}/>
       </Modal>
 

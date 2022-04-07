@@ -4,7 +4,7 @@ import {data_fetcher_http_url, dashboardHeaders} from "../../config.js"
 
 
 
-export class Plott extends React.Component {
+export class Graph extends React.Component {
     constructor(props){
         super(props);
         this.kind = props.kind;
@@ -88,14 +88,11 @@ export class Plott extends React.Component {
         setInterval(this.increaseGraphic, 1000);
     } 
 
-    // componentDidUpdate(prevProps) {
-    //   let old_data_array = this.kind === "RRI" ? this.props.data.rri_data : this.props.data.temp_data;
-    //   let new_data_array = this.kind === "RRI" ? prevProps.data.rri_data : prevProps.data.temp_data;
-
-    //   if (old_data_array.length !== new_data_array.length) {
-    //     this.fetchFromRedis();
-    //   }
-    // }
+    componentDidUpdate(prevProps) {
+      if (this.props.mouseClick !== prevProps.mouseClick) {
+        this.fetchFromRedis();
+      }
+    }
   
     fetchFromRedis = () => {
       console.log("fetchFromRedis was called")
@@ -174,7 +171,6 @@ export class Plott extends React.Component {
             data={[this.state.line, this.state.oldline]}
             layout={this.state.layout}
             revision={this.state.revision}
-            onAfterPlot={this.fetchFromRedis}
         />
         );
   }
