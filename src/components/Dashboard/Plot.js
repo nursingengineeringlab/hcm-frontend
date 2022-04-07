@@ -127,6 +127,8 @@ export class Graph extends React.Component {
             oldline.y.push(element["Value"])
             lastX = element["Timestamp"];
             lastY = element["Value"];
+            console.log(lastX);
+            console.log(lastY);      
           }
         }
       }).catch(err => {
