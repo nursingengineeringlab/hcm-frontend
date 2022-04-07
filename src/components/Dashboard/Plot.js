@@ -122,8 +122,8 @@ export class Graph extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if(data) {
-          lastX = data[0]["Timestamp"];
-          lastY = data[0]["Value"];
+          line.x[0] = data[0]["Timestamp"];
+          line.y[0] = data[0]["Value"];
           console.log(lastX);
           console.log(lastY);
           for (var element of data) {
@@ -136,12 +136,7 @@ export class Graph extends React.Component {
       });
 
       //assign first line datapoint to last datapoint of oldline
-      console.log(lastX);
-      console.log(lastY);
-
-      line.x.push(lastX);
       this.state.xindex++;
-      line.y.push(lastY);
       this.state.yindex++;
     }
 
