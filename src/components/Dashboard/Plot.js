@@ -103,13 +103,15 @@ export class Graph extends React.Component {
       var startTime = endTime - sixhoursMillsec;
 
       const { line, oldline } = this.state;
+
+      //clear out current line content
       line.x = [];
       line.y = [];
 
       const endpoint = data_fetcher_http_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
 
-      console.log(endpoint)
-      
+      // console.log(endpoint)
+      // reload oldline from datafetcher REST API (redis)
       fetch(endpoint, {
         method: 'GET',
         headers: dashboardHeaders
@@ -125,14 +127,18 @@ export class Graph extends React.Component {
       }).catch(err => {
         console.log(err);
       });
+
+      //assign first line datapoint to last datapoint of oldline
+      line.x.push(oldline.x[oldline.length-1]);
+      line.y.push(oldline.y[oldline.length-1]);
     }
 
     increaseGraphic = () => {
         const { line, layout } = this.state;
 
         var x_push = (data_array) => {
-          console.log("x index is: ", this.state.xindex);
-          console.log("data_arry.length is", data_array.length)
+          // console.log("x index is: ", this.state.xindex);
+          // console.log("data_arry.length is", data_array.length)
           while(this.state.xindex < data_array.length) {
             line.x.push(data_array[this.state.xindex].time);
             this.state.xindex++;
@@ -141,8 +147,8 @@ export class Graph extends React.Component {
         
         
         var y_push = (data_array) => {
-          console.log("y index is: ", this.state.yindex);
-          console.log("data_arry.length is", data_array.length)
+          // console.log("y index is: ", this.state.yindex);
+          // console.log("data_arry.length is", data_array.length)
           while(this.state.yindex < data_array.length) {
             line.y.push(data_array[this.state.yindex].value);
             this.state.yindex++;
