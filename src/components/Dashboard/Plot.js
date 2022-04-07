@@ -101,7 +101,8 @@ export class Graph extends React.Component {
       var deviceId = this.props.data.device_id
       var endTime = Date.now();
       var startTime = endTime - sixhoursMillsec;
-
+      var lastX = 0;
+      var lastY = 0;
       const { line, oldline } = this.state;
 
       //clear out current line content
@@ -122,6 +123,8 @@ export class Graph extends React.Component {
           for (var element of data) {
             oldline.x.push(element["Timestamp"])
             oldline.y.push(element["Value"])
+            lastX = element["Timestamp"];
+            lastY = element["Value"];
           }
         }
       }).catch(err => {
@@ -129,13 +132,9 @@ export class Graph extends React.Component {
       });
 
       //assign first line datapoint to last datapoint of oldline
-      console.log(oldline.x[oldline.length-1]);
-      console.log(oldline.y[oldline.length-1]);
-      console.log(oldline.x[0]);
-      console.log(oldline.y[0]);
 
-      line.x.push(oldline.x[0]);
-      line.y.push(oldline.y[0]);
+      line.x.push(lastX);
+      line.y.push(lastY);
     }
 
     increaseGraphic = () => {
