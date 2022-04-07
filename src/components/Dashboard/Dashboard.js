@@ -109,7 +109,7 @@ class Dashboard extends Component {
   // }
   call_back = (topic, message) => {
     const packet = ecg.ECGPacket.deserializeBinary(message).toObject();
-    console.log(packet)
+    // console.log(packet)
     if(packet.command === ecg.ECGPacket.CommandType.NEW) {
         console.log("New device connected.", packet.deviceId);
         packet.active = true;

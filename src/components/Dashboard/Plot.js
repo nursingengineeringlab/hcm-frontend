@@ -129,8 +129,13 @@ export class Graph extends React.Component {
       });
 
       //assign first line datapoint to last datapoint of oldline
-      line.x.push(oldline.x[oldline.length-1]);
-      line.y.push(oldline.y[oldline.length-1]);
+      console.log(oldline.x[oldline.length-1]);
+      console.log(oldline.y[oldline.length-1]);
+      console.log(oldline.x[0]);
+      console.log(oldline.y[0]);
+
+      line.x.push(oldline.x[0]);
+      line.y.push(oldline.y[0]);
     }
 
     increaseGraphic = () => {
