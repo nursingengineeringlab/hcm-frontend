@@ -121,6 +121,10 @@ export class Graph extends React.Component {
           for (var element of data) {
             oldline.x.unshift(element["Timestamp"])
             oldline.y.unshift(element["Value"])
+            console.log("---------------------------")
+            console.log(element["Timestamp"])
+            console.log(element["Value"])
+            console.log("---------------------------")
             // line.x[0] = element["Timestamp"];
             // line.y[0] = element["Timestamp"];  
           }
