@@ -101,13 +101,10 @@ export class Graph extends React.Component {
       const onehourMillsec = 3600000;
       const sixhoursMillsec = 21600000;
       var deviceId = this.props.data.device_id
-      var endTime = Date.now();
+      var endTime = Date.now()-1000;
       var startTime = endTime - sixhoursMillsec;
       const { line, oldline } = this.state;
 
-      //clear out current line content
-      line.x = [];
-      line.y = [];
 
       const endpoint = data_fetcher_http_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
 
@@ -123,13 +120,18 @@ export class Graph extends React.Component {
           for (var element of data) {
             oldline.x.push(element["Timestamp"])
             oldline.y.push(element["Value"])
-            line.x[0] = element["Timestamp"];
-            line.y[0] = element["Timestamp"];  
+            // line.x[0] = element["Timestamp"];
+            // line.y[0] = element["Timestamp"];  
           }
         }
       }).catch(err => {
         console.log(err);
       });
+      
+      
+      //clear out current line content
+      line.x = [];
+      line.y = [];
 
       //assign first line datapoint to last datapoint of oldline
       // this.state.xindex++;
