@@ -107,7 +107,8 @@ export class Graph extends React.Component {
 
 
       const endpoint = data_fetcher_http_url + this.kind + '?deviceId=' + deviceId + '&endTime=' + endTime.toString() + '&startTime=' + startTime.toString();
-
+      oldline.x = [];
+      oldline.y = [];
       console.log(endpoint)
       // reload oldline from datafetcher REST API (redis)
       fetch(endpoint, {
