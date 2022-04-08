@@ -146,7 +146,7 @@ export class Graph extends React.Component {
           // console.log("x index is: ", this.state.xindex);
           // console.log("data_arry.length is", data_array.length)
           while(this.state.xindex < data_array.length) {
-            line.x.push(data_array[this.state.xindex].time);
+            line.x.unshift(data_array[this.state.xindex].time);
             this.state.xindex++;
           }
         };
@@ -156,7 +156,7 @@ export class Graph extends React.Component {
           // console.log("y index is: ", this.state.yindex);
           // console.log("data_arry.length is", data_array.length)
           while(this.state.yindex < data_array.length) {
-            line.y.push(data_array[this.state.yindex].value);
+            line.y.unshift(data_array[this.state.yindex].value);
             this.state.yindex++;
           }
         };
