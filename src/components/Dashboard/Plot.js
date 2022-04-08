@@ -120,11 +120,11 @@ export class Graph extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if(data) {
-          line.x[0] = data[0]["Timestamp"];
-          line.y[0] = data[0]["Value"];
           for (var element of data) {
             oldline.x.push(element["Timestamp"])
             oldline.y.push(element["Value"])
+            line.x[0] = element["Timestamp"];
+            line.y[0] = element["Timestamp"];  
           }
         }
       }).catch(err => {
@@ -132,8 +132,8 @@ export class Graph extends React.Component {
       });
 
       //assign first line datapoint to last datapoint of oldline
-      this.state.xindex++;
-      this.state.yindex++;
+      // this.state.xindex++;
+      // this.state.yindex++;
     }
 
     increaseGraphic = () => {
