@@ -126,7 +126,7 @@ export class Graph extends React.Component {
             console.log(element["Value"])
             console.log("---------------------------")
             // line.x[0] = element["Timestamp"];
-            // line.y[0] = element["Timestamp"];  
+            // line.y[0] = element["Timestamp"];
           }
         }
       }).catch(err => {
