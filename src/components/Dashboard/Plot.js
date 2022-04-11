@@ -8,6 +8,7 @@ export class Graph extends React.Component {
     constructor(props){
         super(props);
         this.kind = props.kind;
+        this.mouseClick = this.props.mouseClick;
     }
     
     state = {
@@ -91,6 +92,7 @@ export class Graph extends React.Component {
     } 
 
     componentDidUpdate(prevProps) {
+      // console.log(this.props.mouseClick);
       if (this.props.mouseClick !== prevProps.mouseClick) {
         this.fetchFromRedis();
       }

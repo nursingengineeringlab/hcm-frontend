@@ -80,7 +80,10 @@ export class DeviceTile extends React.Component {
 
 
 export class DeviceModal extends React.Component {
-
+    constructor(props){
+        super(props);
+    }
+    
     render() { 
       return (
           <>
@@ -115,7 +118,7 @@ export class DeviceModal extends React.Component {
                 </Col>
 
             </Row>
-            <Row style={{width: '100%'}} justify='start' span={24}><Graph {...this.props} kind={'RRI'} style={{width: '100%'}}/></Row>
+            <Row style={{width: '100%'}} justify='start' span={24}><Graph {...this.props} kind={'RRI'}/></Row>
             <Row justify='start' span={24}><Graph {...this.props} kind={'TEMP'}/></Row>
             </div>
 

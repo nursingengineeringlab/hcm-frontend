@@ -15,8 +15,8 @@ class SeniorUser extends React.Component {
     this.state = {
       collapsed: false,
       isModalVisible: false,
+      mouseClick: 0,
     };
-    this.props.mouseClick = 0;
   }
 
   senior_object = () => {
@@ -114,7 +114,10 @@ class SeniorUser extends React.Component {
 
   ModelOpen = () =>{
     this.setState({isModalVisible: true});
-    this.props.mouseClick++;
+    this.setState(prevState => {
+      return {mouseClick: prevState.mouseClick + 1}
+   });
+  //  console.log(this.state.mouseClick);
   }
 
   render() {
@@ -136,7 +139,7 @@ class SeniorUser extends React.Component {
           onCancel={this.ModelClose} 
           width={'60%'}
           title="More ...">
-          <DeviceModal {...this.props}/>
+          <DeviceModal {...this.props} mouseClick={this.state.mouseClick}/>
       </Modal>
 
       </>
