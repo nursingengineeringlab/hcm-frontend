@@ -46,6 +46,12 @@ class Dashboard extends Component {
 
   componentDidMount(){
 
+<<<<<<< HEAD
+=======
+    // console.log(env)
+    // console.log(env.SSL_KEY_FILE)
+    // console.log(env.SSL_CRT_FILE)
+>>>>>>> revert back to ws
 
     var options = {
       clean: true,
@@ -54,6 +60,13 @@ class Dashboard extends Component {
       clientId: 'hcm_frontend',
       username: 'emqx_test',
       password: 'emqx_test',
+<<<<<<< HEAD
+=======
+      // key: env.SSL_KEY_FILE,
+      // cert: env.SSL_CRT_FILE,
+      rejectUnauthorized: true,
+      // protocol: 'mqtts',
+>>>>>>> revert back to ws
     }
     var client = mqtt.connect(mqtt_url, options);
 
