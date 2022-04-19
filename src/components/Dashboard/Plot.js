@@ -3,7 +3,6 @@ import Plot from 'react-plotly.js';
 import {data_fetcher_http_url, dashboardHeaders} from "../../config.js"
 
 
-
 export class Graph extends React.Component {
     constructor(props){
         super(props);
@@ -123,10 +122,10 @@ export class Graph extends React.Component {
           for (var element of data) {
             oldline.x.unshift(element["Timestamp"])
             oldline.y.unshift(element["Value"])
-            console.log("---------------------------")
-            console.log(element["Timestamp"])
-            console.log(element["Value"])
-            console.log("---------------------------")
+            // console.log("---------------------------")
+            // console.log(element["Timestamp"])
+            // console.log(element["Value"])
+            // console.log("---------------------------")
             // line.x[0] = element["Timestamp"];
             // line.y[0] = element["Timestamp"];
           }

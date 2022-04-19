@@ -5,7 +5,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faHeartbeat, faThermometer, faUser, } from '@fortawesome/free-solid-svg-icons'
 import GaugeChart from 'react-gauge-chart'
 import {Graph} from './Plot.js'
-
 const { Text } = Typography;
 
 export const Device_Description = {

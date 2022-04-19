@@ -1,5 +1,0 @@
-{
-    "SERVER_URL": "https://nelab-ingress.eastus.cloudapp.azure.com/backend",
-    "MQTT_URL": "wss://nelab.ddns.umass.edu:32729/mqtt",
-    "DATAFETCHER_URL": "https://nelab-ingress.eastus.cloudapp.azure.com/"
-}
