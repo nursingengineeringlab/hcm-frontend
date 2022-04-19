@@ -56,7 +56,5 @@ window.env = {
   "npm_node_execpath": "/usr/local/Cellar/node/17.8.0/bin/node",
   "npm_config_prefix": "/usr/local",
   "COLORTERM": "truecolor",
-  "SSL_KEY_FILE": "\"-----BEGIN PRIVATE KEY-----",
-  "SSL_CRT_FILE": "\"-----BEGIN CERTIFICATE-----",
   "Cf0mASCAhxrdiKFTL0H6nTYQqgvAxX8": ""
 };
