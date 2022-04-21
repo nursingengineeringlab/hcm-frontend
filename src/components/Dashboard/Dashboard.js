@@ -61,9 +61,9 @@ class Dashboard extends Component {
       clientId: 'hcm_frontend',
       username: 'emqx_test',
       password: 'emqx_test',
-      key: key1,
-      cert: key2,
-      rejectUnauthorized: true,
+      // key: key1,
+      // cert: key2,
+      rejectUnauthorized: false,
       protocol: 'mqtts',
     }
     var client = mqtt.connect(mqtt_url, options);
