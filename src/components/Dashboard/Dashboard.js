@@ -69,7 +69,7 @@ class Dashboard extends Component {
     var client = mqtt.connect(mqtt_url, options);
 
     client.on('connect', function () {
-      console.log(mqtt);
+      console.log(mqtt_url);
       console.log("connected...");
       client.subscribe('emqtt')
     })
