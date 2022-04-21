@@ -69,6 +69,8 @@ class Dashboard extends Component {
     var client = mqtt.connect(mqtt_url, options);
 
     client.on('connect', function () {
+      console.log(mqtt);
+      console.log("connected...");
       client.subscribe('emqtt')
     })
     
@@ -112,7 +114,7 @@ class Dashboard extends Component {
   // }
   call_back = (topic, message) => {
     const packet = ecg.ECGPacket.deserializeBinary(message).toObject();
-    // console.log(packet)
+    console.log(packet)
     if(packet.command === ecg.ECGPacket.CommandType.NEW) {
         console.log("New device connected.", packet.deviceId);
         packet.active = true;
