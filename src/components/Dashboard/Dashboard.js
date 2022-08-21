@@ -54,7 +54,7 @@ class Dashboard extends Component {
       username: 'emqx_test',
       password: 'emqx_test',
       rejectUnauthorized: false,
-      protocol: 'mqtts',
+      protocol: 'mqtt',
     }
     var client = mqtt.connect(mqtt_url, options);
 
@@ -94,14 +94,6 @@ class Dashboard extends Component {
 
   };
 
-  // function (topic, message) {
-  //   const desData = ecg.ECGPacket.deserializeBinary(message).toObject();
-  //   this.call_back();
-  //   // const ecgObj = new ECGPacket()
-  //   // const packet = schema.decodeECGPacket(message);
-  //   console.log(desData)
-  //   // this.setState({flag: !this.state.flag}); 
-  // }
   call_back = (topic, message) => {
     const packet = ecg.ECGPacket.deserializeBinary(message).toObject();
     console.log(packet)
