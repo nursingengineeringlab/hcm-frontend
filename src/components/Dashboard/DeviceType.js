@@ -103,17 +103,15 @@ export class DeviceModal extends React.Component {
 
                 {/* Guage */}
                 <Col style={styles.gbox} span={11}>
-                    {this.props.data.active === false ? <Text>No real-time data</Text> : <GaugeChart id="gauge-chart3" 
-                        nrOfLevels={3}
-                        arcsLength={[0.2, 0.5, 0.25]}
-                        colors={["#EA4228", "#5BE12C", "#F5CD19"]}
-                        textColor={"black"}
-                        arcWidth={0.1} 
-                        arcPadding={0.01}
-                        percent={0.37} 
-                        formatTextValue={ value => this.props.data.rri_data[this.props.data.rri_data.length-1].value}
-                        needleColor={"#AEBAB1"}
-                    />}
+                    {this.props.data.active === false ? <Text>No real-time data</Text> : 
+                    
+                    <Text>
+                        <Row> <b> RRI: </b> </Row>
+                        <Row>{ this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Row>
+                        <Row> <b> Temperature: </b> </Row>
+                        <Row>{ this.props.data.rri_data[this.props.data.temp_data.length-1].value } </Row>
+                    </Text>
+                    }
                 </Col>
 
             </Row>
