@@ -104,12 +104,11 @@ export class DeviceModal extends React.Component {
                 {/* Guage */}
                 <Col style={styles.gbox} span={11}>
                     {this.props.data.active === false ? <Text>No real-time data</Text> : 
-                    
                     <Text>
-                        <Row> <b> RRI: </b> </Row>
-                        <Row>{ this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Row>
-                        <Row> <b> Temperature: </b> </Row>
-                        <Row>{ this.props.data.rri_data[this.props.data.temp_data.length-1].value } </Row>
+                        <Row><Text> <b> RRI: </b> </Text></Row>
+                        <Row><Text>{ this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Text></Row>
+                        <Row><Text><b> Temperature: </b></Text></Row>
+                        <Row><Text>{ this.props.data.rri_data[this.props.data.temp_data.length-1].value }</Text></Row>
                     </Text>
                     }
                 </Col>
