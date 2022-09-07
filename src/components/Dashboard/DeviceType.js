@@ -108,7 +108,7 @@ export class DeviceModal extends React.Component {
                         <Row><Text> <b> RRI: </b> </Text></Row>
                         <Row><Text>{ this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Text></Row>
                         <Row><Text><b> Temperature: </b></Text></Row>
-                        <Row><Text>{ this.props.data.rri_data[this.props.data.temp_data.length-1].value }</Text></Row>
+                        <Row><Text>{ this.props.data.temp_data[this.props.data.temp_data.length-1].value }</Text></Row>
                     </Text>
                     }
                 </Col>
