@@ -4,14 +4,14 @@ import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import { Container, Button, Row, Col, Form } from "react-bootstrap";
-import { login } from "./LoginActions.js";
+import { login, getToken } from "./LoginActions.js";
 
 class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: ""
+      email: "",
+      token: ""
     };
   }
   onChange = e => {
@@ -20,11 +20,19 @@ class Login extends Component {
 
   onLoginClick = () => {
     const userData = {
-      username: this.state.username,
-      password: this.state.password
+      email: this.state.email,
+      token: this.state.token
     };
     this.props.login(userData, "/dashboard");
   };
+
+  onGetTokenClick = () => {
+    const userData = {
+      email: this.state.email
+    };
+    this.props.getToken(userData);
+  }
+
   render() {
     return (
       <Container>
@@ -33,33 +41,34 @@ class Login extends Component {
             <h1>Login</h1>
             <Form>
               <Form.Group controlId="usernameId">
-                <Form.Label>User name</Form.Label>
+                <Form.Label>Email address: </Form.Label>
                 <Form.Control
                   type="text"
-                  name="username"
-                  placeholder="Enter user name"
-                  value={this.state.username}
+                  name="email"
+                  placeholder="example@umass.edu"
+                  value={this.state.email}
                   onChange={this.onChange}
                 />
+                
               </Form.Group>
-
+              <Button color="primary" onClick={this.onGetTokenClick}>
+                  Get Token
+                </Button>
               <Form.Group controlId="passwordId">
-                <Form.Label>Your password</Form.Label>
+                <Form.Label>Login Token:</Form.Label>
                 <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="Enter password"
-                  value={this.state.password}
+                  type="text"
+                  name="token"
+                  placeholder="123456"
+                  value={this.state.token}
                   onChange={this.onChange}
                 />
+                
               </Form.Group>
             </Form>
             <Button color="primary" onClick={this.onLoginClick}>
-              Login
-            </Button>
-            <p className="mt-2">
-              Don't have account? <Link to="/signup">Signup</Link>
-            </p>
+                  Login
+                </Button>
           </Col>
         </Row>
       </Container>
@@ -70,6 +79,7 @@ class Login extends Component {
 //export default Login;
 Login.propTypes = {
   login: PropTypes.func.isRequired,
+  getToken: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired
 };
 
@@ -78,5 +88,6 @@ const mapStateToProps = state => ({
 });
 
 export default connect(mapStateToProps, {
-  login
+  login,
+  getToken
 })(withRouter(Login));

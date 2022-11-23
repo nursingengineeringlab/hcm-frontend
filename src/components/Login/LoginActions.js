@@ -4,14 +4,19 @@ import { toast } from "react-toastify";
 import { SET_TOKEN, SET_CURRENT_USER, UNSET_CURRENT_USER } from "./LoginTypes";
 import { setAxiosAuthToken, setDashBoardAuthToken, toastOnError } from "../../utils/Utils";
 
+export const getToken = (userData) => dispatch => {
+  axios
+    .post("/api/v1/auth/email/", userData);
+};
+
 export const login = (userData, redirectTo) => dispatch => {
   axios
-    .post("/api/v1/token/login/", userData)
+    .post("/api/v1/auth/token/", userData)
     .then(response => {
-      const { auth_token } = response.data;
-      setAxiosAuthToken(auth_token);
-      setDashBoardAuthToken(auth_token);
-      dispatch(setToken(auth_token));
+      const { token } = response.data;
+      setAxiosAuthToken(token);
+      setDashBoardAuthToken(token);
+      dispatch(setToken(token));
       dispatch(getCurrentUser(redirectTo));
     })
     .catch(error => {
