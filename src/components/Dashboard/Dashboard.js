@@ -160,7 +160,7 @@ class Dashboard extends Component {
           <Navbar.Toggle />
           <Navbar.Collapse className="justify-content-end">
             <Navbar.Text className="text-light">
-              User: <b>{user.username}</b>
+              User: <b>{user.email}</b>
             </Navbar.Text>
             <Nav.Link onClick={this.onLogout} className="text-light">Logout</Nav.Link>
           </Navbar.Collapse>
