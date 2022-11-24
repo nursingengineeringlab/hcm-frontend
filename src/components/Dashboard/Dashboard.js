@@ -183,11 +183,21 @@ class Dashboard extends Component {
           <Layout className="site-layout">
             <Content style={{ margin: '0 16px' }}>
               <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
-                <UserList
+
+              {user.username.startsWith('admin')
+              ?
+                <UserList 
                   online_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === false && data.active === true)}
                   watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.watch === true && data.active === true)}
                   inactive_seniors={Array.from(this.OnlineSeniors.values()).filter(data=>data.active === false)}
                 />
+              :
+              <UserList
+              online_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === false && data.active === true).filter(data => data.name === user.username)}
+              watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === true && data.active === true).filter(data => data.name === user.username)}
+              inactive_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.active === false).filter(data => data.name === user.username)}
+            />
+            }
               </div>
             </Content>
             <Footer style={{ textAlign: 'center' }}>NE Lab ©2022 Umass Amherst</Footer>
