@@ -193,9 +193,9 @@ class Dashboard extends Component {
                 />
               :
               <UserList
-              online_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === false && data.active === true).filter(data => data.name === user.username)}
-              watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === true && data.active === true).filter(data => data.name === user.username)}
-              inactive_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.active === false).filter(data => data.name === user.username)}
+              online_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === false && data.active === true).filter(data => data.user.username === user.username)}
+              watch_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.watch === true && data.active === true).filter(data => data.user.username === user.username)}
+              inactive_seniors={Array.from(this.OnlineSeniors.values()).filter(data => data.active === false).filter(data => data.user.username === user.username)}
             />
             }
               </div>
