@@ -6,7 +6,14 @@ import { setAxiosAuthToken, setDashBoardAuthToken, toastOnError } from "../../ut
 
 export const getToken = (userData) => dispatch => {
   axios
-    .post("/api/v1/auth/email/", userData);
+    .post("/api/v1/auth/email/", userData)
+    .then(response => {
+      const { detail } = response.data;
+      toast.info(detail);
+    })
+    .catch(error => {
+      toastOnError(error);
+    });
 };
 
 export const login = (userData, redirectTo) => dispatch => {
