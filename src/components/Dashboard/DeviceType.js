@@ -105,8 +105,8 @@ export class DeviceModal extends React.Component {
                 <Col style={styles.gbox} span={11}>
                     {this.props.data.active === false ? <Text>No real-time data</Text> : 
                     <Text>
-                        <Row><Text> <b> RRI: </b> </Text></Row>
-                        <Row><Text>{ this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Text></Row>
+                        <Row><Text> <b> RRI Heart rate: </b> </Text></Row>
+                        <Row><Text>{ 60000.0 / this.props.data.rri_data[this.props.data.rri_data.length-1].value } </Text></Row>
                         <Row><Text><b> Temperature: </b></Text></Row>
                         <Row><Text>{ this.props.data.temp_data[this.props.data.temp_data.length-1].value }</Text></Row>
                     </Text>
