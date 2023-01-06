@@ -1,0 +1,11 @@
+[Unit]
+Description=HCM Web Frontend
+After=network-online.target
+
+[Service]
+WorkingDirectory=/opt/hcm-frontend
+ExecStart=npm start
+
+[Install]
+WantedBy=multi-user.target
+
