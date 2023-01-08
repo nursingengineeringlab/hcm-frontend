@@ -16,6 +16,7 @@ export const Device_Description = {
         "trigger_max_direction": [1000, 1100, 1200],
         "graph_min": 0,
         "graph_max": 1000,
+	"ignore_zero": false,
     },
     "TEMP": {
         "id": 2,
@@ -25,6 +26,7 @@ export const Device_Description = {
         "trigger_max_direction": [99.5, 100.0, 100.9],
         "graph_min": -20,
         "graph_max": 150,
+	"ignore_zero": true,
     },
     "SPO2": {
         "id": 3,
@@ -34,6 +36,7 @@ export const Device_Description = {
         "trigger_max_direction": [100, 100.0, 100],
         "graph_min": 94,
         "graph_max": 102,
+	"ignore_zero": true,
     }, 
 }
 const bckColor = "#dcdcdc";
@@ -44,7 +47,8 @@ export const exceeded_threshold = (val, device_type) =>{
         if( (Device_Description[device_type].watch_threshold_max < val) ||
             (Device_Description[device_type].watch_threshold_min > val)
         ) {
-            return true;
+            if (Device_Description[device_type].ignore_zero && val == 0) return false;
+            else return true;
         }
     }
     return false;
