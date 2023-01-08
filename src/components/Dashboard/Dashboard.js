@@ -118,7 +118,7 @@ class Dashboard extends Component {
           this.OnlineSeniors.get(packet.deviceId).active = true;
           this.OnlineSeniors.get(packet.deviceId).watch = exceeded_threshold(
               new_data.value,
-              this.OnlineSeniors.get(packet.deviceId).date_type
+              this.OnlineSeniors.get(packet.deviceId).data_type
           );
           // Maintain array size
           if(this.OnlineSeniors.get(packet.deviceId).rri_data.length > array_len_24h){
